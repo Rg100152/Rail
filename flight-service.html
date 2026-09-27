@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAIL Air Services – Flight Booking</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+               RESET & BASE STYLES
+           ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #1a1a2e;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ============================
+                   TOP BAR
+           ============================ */
+        .top-bar {
+            background: #0d0d1a;
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+                   NAVBAR
+           ============================ */
+        .navbar {
+            background: #ffffff;
+            padding: 14px 0;
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #1a1a2e;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #6c757d;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #1a1a2e;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.08);
+        }
+
+        .nav-links .flight-btn {
+            background: #3498db;
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 40px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #1a1a2e;
+            cursor: pointer;
+        }
+
+        /* ============================
+                   HERO SECTION
+           ============================ */
+        .hero-flight {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 60px 0;
+            color: #fff;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero-text h1 span {
+            color: #3498db;
+        }
+
+        .hero-text p {
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .hero-image-box {
+            text-align: center;
+        }
+
+        .hero-image-box img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            object-fit: cover;
+        }
+
+        /* ============================
+               FLIGHT SEARCH CARD
+           ============================ */
+        .search-container {
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .flight-type-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .flight-tab {
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .flight-tab.active {
+            background: #3498db;
+            color: #fff;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-group label i {
+            color: #3498db;
+            margin-right: 4px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 13px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #27ae60;
+        }
+
+        /* ============================
+               POPULAR DESTINATIONS
+           ============================ */
+        .destinations {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .dest-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+
+        .dest-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .dest-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .dest-info {
+            padding: 16px;
+        }
+
+        .dest-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .dest-info p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .dest-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .dest-price .price {
+            font-size: 16px;
+            font-weight: 800;
+            color: #2ecc71;
+        }
+
+        .dest-price a {
+            font-size: 12px;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        /* ============================
+               FEATURES / SERVICES
+           ============================ */
+        .features {
+            background: #ffffff;
+            padding: 50px 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-item i {
+            font-size: 32px;
+            color: #3498db;
+            margin-bottom: 12px;
+        }
+
+        .feature-item h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .feature-item p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* ============================
+                   FOOTER
+           ============================ */
+        footer {
+            background: #0d0d1a;
+            padding: 40px 0 20px;
+            color: #adb5bd;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand h3 {
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand h3 span {
+            color: #2ecc71;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 1800-111-139</span>
+                <span><i class="fas fa-envelope"></i> flights@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Flight Assistance</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">✈️</span>
+                <div>
+                    <span class="logo-text">RAIL <span>AIR</span></span>
+                    <small>Flight Services Portal</small>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="train-list.html"><i class="fas fa-train"></i> TRAINS</a></li>
+                <li><a href="flight-service.html" class="active flight-btn"><i class="fas fa-plane"></i> FLIGHTS</a></li>
+                <li><a href="seat-availability.html"><i class="fas fa-chair"></i> SEATS</a></li>
+            </ul>
+
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-flight">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Start Your <span>Unforgettable</span> Journey</h1>
+                    <p>Book domestic & international flights at guaranteed lowest airfares with RAIL Air Services. Fast, seamless & reliable.</p>
+                </div>
+                <!-- STOCK IMAGE LINKED HERE -->
+                <div class="hero-image-box">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycuhe49X6C94aw5KEbzGLpGvIeoHfxC2Dfma3UWYK8w&s=10" alt="RAIL Flight Booking Banner" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH CARD -->
+    <section class="search-container">
+        <div class="container">
+            <div class="search-card">
+                <div class="flight-type-tabs">
+                    <button class="flight-tab active"><i class="fas fa-plane-departure"></i> One Way</button>
+                    <button class="flight-tab"><i class="fas fa-sync"></i> Round Trip</button>
+                </div>
+
+                <form action="#" method="GET">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label><i class="fas fa-plane-departure"></i> From</label>
+                            <input type="text" placeholder="e.g. New Delhi (DEL)" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-plane-arrival"></i> Destination</label>
+                            <input type="text" placeholder="e.g. Mumbai (BOM)" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Flight Date</label>
+                            <input type="date" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-user-friends"></i> Passengers</label>
+                            <select>
+                                <option>1 Passenger (Economy)</option>
+                                <option>2 Passengers (Economy)</option>
+                                <option>1 Passenger (Business)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="search-btn"><i class="fas fa-search"></i> Search Flights</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR DESTINATIONS -->
+    <section class="destinations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Flight Destinations</h2>
+                <p>Explore top flight routes at affordable airfares</p>
+            </div>
+
+            <div class="dest-grid">
+                <!-- Destination Card 1 -->
+                <div class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=500&q=80" alt="Delhi to Mumbai" />
+                    <div class="dest-info">
+                        <h3>New Delhi → Mumbai</h3>
+                        <p>Non-stop • 2h 10m</p>
+                        <div class="dest-price">
+                            <span class="price">₹3,499</span>
+                            <a href="#">Book Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Card 2 -->
+                <div class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=500&q=80" alt="Mumbai to Goa" />
+                    <div class="dest-info">
+                        <h3>Mumbai → Goa</h3>
+                        <p>Non-stop • 1h 15m</p>
+                        <div class="dest-price">
+                            <span class="price">₹2,899</span>
+                            <a href="#">Book Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Card 3 -->
+                <div class="dest-card">
+                    <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=500&q=80" alt="Bangalore to Delhi" />
+                    <div class="dest-info">
+                        <h3>Bengaluru → New Delhi</h3>
+                        <p>Non-stop • 2h 45m</p>
+                        <div class="dest-price">
+                            <span class="price">₹4,199</span>
+                            <a href="#">Book Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Bookings</h4>
+                    <p>100% safe & trusted payment options for peace of mind.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Instant E-Tickets</h4>
+                    <p>Get flight confirmation and e-tickets instantly on SMS/Email.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Dedicated customer care for flight schedule & booking support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>RAIL <span>AIR</span></h3>
+                    <p>Official Flight Service Integration for RAIL Portal. Providing seamless journey experiences for BCA Web Project.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Rail Services</a>
+                    <a href="flight-service.html">Flight Services</a>
+                    <a href="seat-availability.html">Seat Matrix</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 RAIL Air Services - BCA Project Work. Designed for Academic Submission.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

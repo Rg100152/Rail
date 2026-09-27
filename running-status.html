@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Running Status – RAIL</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+               RESET & BASE
+            ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #1a1a2e;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* ============================
+               TOP BAR
+            ============================ */
+        .top-bar {
+            background: #0d0d1a;
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .top-bar-left span:hover {
+            color: #fff;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+               NAVBAR
+            ============================ */
+        .navbar {
+            background: #ffffff;
+            padding: 14px 0;
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.10);
+            border-bottom-color: #2ecc71;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+            animation: bounceTrain 3s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #1a1a2e;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #6c757d;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #1a1a2e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #2ecc71;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        .nav-links a:hover {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.08);
+        }
+
+        .nav-links .login-btn {
+            background: #2ecc71;
+            color: #fff !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .login-btn::after {
+            display: none;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+            color: #fff !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+               PAGE HEADER
+            ============================ */
+        .page-header {
+            background: linear-gradient(135deg, #0d0d1a, #1a1a3e);
+            padding: 40px 0 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '🚆';
+            position: absolute;
+            right: 40px;
+            bottom: 20px;
+            font-size: 100px;
+            opacity: 0.04;
+        }
+
+        .page-header h1 {
+            color: #fff;
+            font-size: 34px;
+            font-weight: 900;
+        }
+
+        .page-header h1 span {
+            color: #2ecc71;
+        }
+
+        .page-header p {
+            color: #adb5bd;
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        .page-header .breadcrumb {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .page-header .breadcrumb a {
+            color: #2ecc71;
+            text-decoration: none;
+        }
+
+        .page-header .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================
+               RUNNING STATUS SEARCH
+            ============================ */
+        .status-search {
+            padding: 50px 0;
+            background: #f8f9fa;
+        }
+
+        .status-search .search-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e9ecef;
+        }
+
+        .status-search .search-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .status-search .search-card p {
+            color: #6c757d;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .status-search .form-group {
+            margin-bottom: 16px;
+        }
+
+        .status-search .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 6px;
+        }
+
+        .status-search .form-group label i {
+            color: #2ecc71;
+            margin-right: 6px;
+        }
+
+        .status-search .form-group input,
+        .status-search .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            background: #fafbfc;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .status-search .form-group input:focus,
+        .status-search .form-group select:focus {
+            border-color: #2ecc71;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .status-search .form-group input::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
+        }
+
+        .status-search .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .status-search .search-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #0d0d1a;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-search .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.30);
+        }
+
+        .status-search .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status-search .search-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .status-search .search-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .status-search .search-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================
+               STATUS RESULT
+            ============================ */
+        .status-result {
+            display: none;
+            padding: 40px 0 60px;
+            background: #ffffff;
+        }
+
+        .status-result.show {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-result .result-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid #e9ecef;
+        }
+
+        .status-result .train-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+
+        .status-result .train-header .train-name {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .status-result .train-header .train-name small {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        .status-result .train-header .train-status-badge {
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .status-result .train-header .train-status-badge.on-time {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .status-result .train-header .train-status-badge.delayed {
+            background: rgba(243, 156, 18, 0.15);
+            color: #d97706;
+        }
+
+        .status-result .train-header .train-status-badge.cancelled {
+            background: rgba(230, 57, 70, 0.15);
+            color: #e63946;
+        }
+
+        /* Live Location */
+        .status-result .live-location {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .status-result .live-location .live-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #2ecc71;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        .status-result .live-location .live-text {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .status-result .live-location .live-text span {
+            color: #2ecc71;
+        }
+
+        .status-result .live-location .live-time {
+            margin-left: auto;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* Station Timeline */
+        .status-result .station-timeline {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e9ecef;
+        }
+
+        .status-result .station-timeline h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .status-result .station-timeline .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f5;
+            position: relative;
+        }
+
+        .status-result .station-timeline .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-result .station-timeline .timeline-item .station-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #adb5bd;
+            flex-shrink: 0;
+        }
+
+        .status-result .station-timeline .timeline-item .station-dot.passed {
+            background: #2ecc71;
+        }
+
+        .status-result .station-timeline .timeline-item .station-dot.current {
+            background: #2ecc71;
+            width: 16px;
+            height: 16px;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
+        }
+
+        .status-result .station-timeline .timeline-item .station-dot.upcoming {
+            background: #dee2e6;
+        }
+
+        .status-result .station-timeline .timeline-item .station-info {
+            flex: 1;
+        }
+
+        .status-result .station-timeline .timeline-item .station-info .station-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .status-result .station-timeline .timeline-item .station-info .station-detail {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .status-result .station-timeline .timeline-item .station-time {
+            text-align: right;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .status-result .station-timeline .timeline-item .station-time .delay {
+            font-size: 12px;
+            font-weight: 500;
+            color: #e63946;
+        }
+
+        .status-result .station-timeline .timeline-item .station-time .ontime {
+            font-size: 12px;
+            font-weight: 500;
+            color: #2ecc71;
+        }
+
+        /* ============================
+               ERROR / NOT FOUND
+            ============================ */
+        .error-message {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
+
+        .error-message .error-icon {
+            font-size: 60px;
+            color: #e63946;
+            margin-bottom: 16px;
+        }
+
+        .error-message h3 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .error-message p {
+            color: #6c757d;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        /* ============================
+               FOOTER
+            ============================ */
+        footer {
+            background: #0d0d1a;
+            padding: 50px 0 20px;
+            color: #adb5bd;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand h3 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand h3 span {
+            color: #2ecc71;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            color: #adb5bd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .footer-social a:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+            transform: translateY(-2px);
+        }
+
+        .footer-links h4 {
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 13px;
+            display: block;
+            padding: 4px 0;
+            transition: all 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2ecc71;
+            padding-left: 4px;
+        }
+
+        .footer-contact p {
+            font-size: 13px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-contact p i {
+            color: #2ecc71;
+            width: 18px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-bottom-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+               RESPONSIVE
+            ============================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                gap: 4px;
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .status-search .search-card {
+                padding: 24px 20px;
+            }
+
+            .status-search .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .status-result .train-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .status-result .live-location {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .status-result .live-location .live-time {
+                margin-left: 0;
+            }
+
+            .status-result .station-timeline .timeline-item {
+                flex-wrap: wrap;
+            }
+
+            .status-result .station-timeline .timeline-item .station-time {
+                text-align: left;
+                width: 100%;
+                padding-left: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 22px;
+            }
+
+            .status-result .result-card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="search.html"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="running-status.html" class="active"><i class="fas fa-train"></i> RUNNING STATUS</a></li>
+                <li><a href="service.html"><i class="fas fa-concierge-bell"></i> SERVICES</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== PAGE HEADER ==================== -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Train <span>Running Status</span></h1>
+            <p>Track your train in real-time with live updates</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Running Status</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== RUNNING STATUS SEARCH ==================== -->
+    <section class="status-search">
+        <div class="container">
+            <div class="search-card">
+                <h3><i class="fas fa-train" style="color:#2ecc71;"></i> Check Running Status</h3>
+                <p>Enter train number and journey date to get live updates</p>
+
+                <form id="statusForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-hashtag"></i> Train Number</label>
+                        <input type="text" id="trainNumber" placeholder="e.g. 12345" required maxlength="5" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Journey Date</label>
+                            <input type="date" id="journeyDate" required />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Departure Time</label>
+                            <select id="departureTime">
+                                <option value="">Select Time</option>
+                                <option value="morning">Morning (6 AM - 12 PM)</option>
+                                <option value="afternoon">Afternoon (12 PM - 6 PM)</option>
+                                <option value="evening">Evening (6 PM - 12 AM)</option>
+                                <option value="night">Night (12 AM - 6 AM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="search-btn" id="searchBtn">
+                        <span class="btn-text"><i class="fas fa-search"></i> Get Running Status</span>
+                        <span class="spinner"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== STATUS RESULT ==================== -->
+    <section class="status-result" id="statusResult">
+        <div class="container">
+            <div class="result-card">
+                <!-- Train Header -->
+                <div class="train-header">
+                    <div class="train-name">
+                        🚆 12345 - Rajdhani Express
+                        <small>Delhi → Mumbai</small>
+                    </div>
+                    <span class="train-status-badge on-time">● On Time</span>
+                </div>
+
+                <!-- Live Location -->
+                <div class="live-location">
+                    <div class="live-dot"></div>
+                    <div class="live-text">
+                        🚆 Train is currently at <span>Kanpur Central</span>
+                    </div>
+                    <div class="live-time">
+                        <i class="fas fa-clock"></i> Last updated: 10:30 AM
+                    </div>
+                </div>
+
+                <!-- Station Timeline -->
+                <div class="station-timeline">
+                    <h4><i class="fas fa-route" style="color:#2ecc71;"></i> Station Timeline</h4>
+
+                    <div class="timeline-item">
+                        <div class="station-dot passed"></div>
+                        <div class="station-info">
+                            <div class="station-name">Delhi (NDLS)</div>
+                            <div class="station-detail">Platform 16</div>
+                        </div>
+                        <div class="station-time">
+                            06:30 AM
+                            <div class="ontime">On Time</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="station-dot passed"></div>
+                        <div class="station-info">
+                            <div class="station-name">Mathura Junction</div>
+                            <div class="station-detail">Platform 4</div>
+                        </div>
+                        <div class="station-time">
+                            08:15 AM
+                            <div class="ontime">On Time</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="station-dot current"></div>
+                        <div class="station-info">
+                            <div class="station-name">Kanpur Central ⬅️ Current</div>
+                            <div class="station-detail">Platform 8</div>
+                        </div>
+                        <div class="station-time">
+                            10:30 AM
+                            <div class="delay">Delayed by 15 min</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="station-dot upcoming"></div>
+                        <div class="station-info">
+                            <div class="station-name">Allahabad Junction</div>
+                            <div class="station-detail">Platform 3</div>
+                        </div>
+                        <div class="station-time">
+                            12:45 PM
+                            <div class="delay">Expected 01:00 PM</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="station-dot upcoming"></div>
+                        <div class="station-info">
+                            <div class="station-name">Mumbai (CST)</div>
+                            <div class="station-detail">Platform 8</div>
+                        </div>
+                        <div class="station-time">
+                            02:45 PM
+                            <div class="delay">Expected 03:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ERROR MESSAGE ==================== -->
+    <section class="error-message" id="errorMessage">
+        <div class="container">
+            <div class="error-icon"><i class="fas fa-train"></i></div>
+            <h3>Train Not Found</h3>
+            <p>Please check the train number and try again. Make sure you've entered a valid 5-digit train number.</p>
+            <button onclick="location.reload()" style="margin-top:16px;padding:12px 32px;background:#2ecc71;color:#0d0d1a;border:none;border-radius:40px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;">Try Again</button>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>🚂 RAIL</h3>
+                    <p>Indian Railways Official Partner. Book train tickets online with ease and convenience.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="search.html">Search Trains</a>
+                    <a href="running-status.html">Running Status</a>
+                    <a href="service.html">Services</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Your Account</h4>
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="bookings.html">My Bookings</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> 139 (24x7)</p>
+                    <p><i class="fas fa-envelope"></i> care@rail.co.in</p>
+                    <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RAIL. All Rights Reserved. | Designed with ❤️ for Indian Railways</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  NAVBAR SCROLL EFFECT
+        // ============================================================
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        //  SET MIN DATE TO TODAY
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('journeyDate');
+            dateInput.setAttribute('min', today);
+            dateInput.value = today;
+        });
+
+        // ============================================================
+        //  STATUS FORM SUBMIT
+        // ============================================================
+        document.getElementById('statusForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const trainNumber = document.getElementById('trainNumber').value.trim();
+            const journeyDate = document.getElementById('journeyDate').value;
+            const searchBtn = document.getElementById('searchBtn');
+            const resultDiv = document.getElementById('statusResult');
+            const errorDiv = document.getElementById('errorMessage');
+
+            // Validate
+            if (!trainNumber) {
+                alert('Please enter a train number.');
+                return;
+            }
+
+            if (trainNumber.length < 5) {
+                alert('Please enter a valid 5-digit train number.');
+                return;
+            }
+
+            if (!journeyDate) {
+                alert('Please select a journey date.');
+                return;
+            }
+
+            // Show loading
+            searchBtn.classList.add('loading');
+            searchBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                searchBtn.classList.remove('loading');
+                searchBtn.disabled = false;
+
+                // Demo: Show result for 12345, else error
+                if (trainNumber === '12345') {
+                    resultDiv.classList.add('show');
+                    errorDiv.classList.remove('show');
+                    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    resultDiv.classList.remove('show');
+                    errorDiv.classList.add('show');
+                    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 1500);
+        });
+
+        // ============================================================
+        //  LOG
+        // ============================================================
+        console.log('🚂 RAIL – Running Status Page Loaded Successfully!');
+        console.log('📌 Demo: Enter train number 12345 to see result.');
+    </script>
+
+</body>
+</html>

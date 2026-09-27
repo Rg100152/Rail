@@ -1,0 +1,618 @@
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+                <a href="recovery.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-shield-alt"></i> Recover</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="trains.html"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="train-list.html"><i class="fas fa-list"></i> TRAINS</a></li>
+                <li><a href="seat-availability.html"><i class="fas fa-chair"></i> SEATS</a></li>
+                <li><a href="rail-drishti.html"><i class="fas fa-eye"></i> DISHTI</a></li>
+                <li><a href="food-booking.html"><i class="fas fa-utensils"></i> FOOD</a></li>
+                <li><a href="flight-service.html"><i class="fas fa-plane"></i> FLIGHTS</a></li>
+                <li><a href="easy-cancellation.html"><i class="fas fa-times-circle"></i> CANCEL</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> CONTACT</a></li>
+                <li><a href="help.html"><i class="fas fa-headset"></i> HELP</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO / SEARCH SECTION ==================== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Book Train Tickets <span>Instantly</span></h1>
+                    <p>Safe, Secure & Hassle-free journey across India. Book your train tickets in just a few clicks.</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="stat-number"><span class="counter" data-target="12450">0</span>+</span>
+                            <span class="stat-label">Trains Daily</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-number"><span class="counter" data-target="2500000">0</span>+</span>
+                            <span class="stat-label">Happy Passengers</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="stat-number"><span class="counter" data-target="987">0</span>%</span>
+                            <span class="stat-label">Booking Success</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Form -->
+                <div class="hero-search">
+                    <div class="search-tabs">
+                        <button class="search-tab active" onclick="switchTab('train', this)">
+                            <i class="fas fa-train"></i> Train
+                        </button>
+                        <button class="search-tab" onclick="switchTab('bus', this)">
+                            <i class="fas fa-bus"></i> Bus
+                        </button>
+                        <button class="search-tab" onclick="switchTab('flight', this)">
+                            <i class="fas fa-plane"></i> Flight
+                        </button>
+                        <button class="search-tab" onclick="switchTab('hotel', this)">
+                            <i class="fas fa-hotel"></i> Hotel
+                        </button>
+                    </div>
+
+                    <form id="searchForm" action="trains.html" method="GET">
+                        <div class="search-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> From</label>
+                                <input type="text" id="fromStation" name="from" placeholder="Enter station name" required autocomplete="off" />
+                                <div class="suggestions" id="fromSuggestions"></div>
+                            </div>
+                            <div class="form-group swap-btn-group">
+                                <button type="button" id="swapStations" class="swap-btn" onclick="swapStations()">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-map-marker-alt"></i> To</label>
+                                <input type="text" id="toStation" name="to" placeholder="Enter station name" required autocomplete="off" />
+                                <div class="suggestions" id="toSuggestions"></div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> Date</label>
+                                <input type="date" id="journeyDate" name="date" required />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Passengers</label>
+                                <input type="number" id="passengerCount" name="passengers" value="1" min="1" max="10" />
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-chair"></i> Class</label>
+                                <select id="trainClass" name="class">
+                                    <option value="all">All Classes</option>
+                                    <option value="1A">1A - AC First</option>
+                                    <option value="2A">2A - AC 2 Tier</option>
+                                    <option value="3A">3A - AC 3 Tier</option>
+                                    <option value="SL">SL - Sleeper</option>
+                                    <option value="2S">2S - Second Seating</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i> SEARCH TRAINS
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUICK LINKS ==================== -->
+    <section class="quick-links">
+        <div class="container">
+            <div class="quick-link-grid">
+                <a href="trains.html" class="quick-link-item">
+                    <i class="fas fa-train"></i>
+                    <span>Running Status</span>
+                </a>
+                <a href="seat-availability.html" class="quick-link-item">
+                    <i class="fas fa-chair"></i>
+                    <span>Seat Availability</span>
+                </a>
+                <a href="pnr-status.html" class="quick-link-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>PNR Status</span>
+                </a>
+                <a href="food-booking.html" class="quick-link-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Food Booking</span>
+                </a>
+                <a href="flight-service.html" class="quick-link-item">
+                    <i class="fas fa-plane"></i>
+                    <span>Flight Service</span>
+                </a>
+                <a href="rail-drishti.html" class="quick-link-item">
+                    <i class="fas fa-eye"></i>
+                    <span>Rail Dishti</span>
+                </a>
+                <a href="safe&secure.html" class="quick-link-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Safe & Secure</span>
+                </a>
+                <a href="forgot-password.html" class="quick-link-item">
+                    <i class="fas fa-key"></i>
+                    <span>Forgot Password</span>
+                </a>
+                <a href="recovery.html" class="quick-link-item">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Recover Account</span>
+                </a>
+                <a href="easy-cancellation.html" class="quick-link-item">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Cancel Ticket</span>
+                </a>
+                <a href="help.html" class="quick-link-item">
+                    <i class="fas fa-headset"></i>
+                    <span>Help & Support</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== POPULAR ROUTES ==================== -->
+    <section class="popular-routes" id="routes">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular <span>Routes</span></h2>
+                <p>Most booked train routes across India</p>
+            </div>
+            <div class="route-grid">
+                <div class="route-card" onclick="searchRoute('Delhi','Mumbai')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Delhi → Mumbai</h4>
+                        <p>16 Trains Available</p>
+                        <span class="route-time">~16h 30m</span>
+                    </div>
+                </div>
+                <div class="route-card" onclick="searchRoute('Mumbai','Delhi')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Mumbai → Delhi</h4>
+                        <p>14 Trains Available</p>
+                        <span class="route-time">~16h 45m</span>
+                    </div>
+                </div>
+                <div class="route-card" onclick="searchRoute('Delhi','Kolkata')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Delhi → Kolkata</h4>
+                        <p>12 Trains Available</p>
+                        <span class="route-time">~17h 15m</span>
+                    </div>
+                </div>
+                <div class="route-card" onclick="searchRoute('Chennai','Bangalore')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Chennai → Bangalore</h4>
+                        <p>18 Trains Available</p>
+                        <span class="route-time">~5h 30m</span>
+                    </div>
+                </div>
+                <div class="route-card" onclick="searchRoute('Delhi','Jaipur')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Delhi → Jaipur</h4>
+                        <p>20 Trains Available</p>
+                        <span class="route-time">~4h 15m</span>
+                    </div>
+                </div>
+                <div class="route-card" onclick="searchRoute('Mumbai','Goa')">
+                    <div class="route-icon"><i class="fas fa-train"></i></div>
+                    <div class="route-info">
+                        <h4>Mumbai → Goa</h4>
+                        <p>8 Trains Available</p>
+                        <span class="route-time">~10h 45m</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our <span>Services</span></h2>
+                <p>Complete travel solutions for your journey</p>
+            </div>
+            <div class="service-grid">
+                <a href="trains.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-ticket-alt"></i></div>
+                    <h3>Easy Booking</h3>
+                    <p>Book train tickets in minutes with our simple and secure booking system.</p>
+                </a>
+                <a href="food-booking.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>Food Delivery</h3>
+                    <p>Order delicious food delivered to your seat during the journey.</p>
+                </a>
+                <a href="safe&secure.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Safe & Secure</h3>
+                    <p>Indian Railways – the safest mode of travel with enhanced security.</p>
+                </a>
+                <a href="contact.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>24x7 Support</h3>
+                    <p>Round-the-clock customer support for all your travel queries.</p>
+                </a>
+                <a href="easy-cancellation.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>Easy Cancellation</h3>
+                    <p>Hassle-free cancellation and refund process for your bookings.</p>
+                </a>
+                <a href="coming-soon.html" class="service-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Book tickets on-the-go with our mobile-optimized platform.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== OFFERS ==================== -->
+    <section class="offers" id="offers">
+        <div class="container">
+            <div class="offer-banner">
+                <div class="offer-content">
+                    <span class="offer-tag">🔥 LIMITED OFFER</span>
+                    <h2>Get <span>10% OFF</span> on Your First Booking</h2>
+                    <p>Use code <strong>RAILFIRST</strong> at checkout. Valid for all classes!</p>
+                    <a href="trains.html" class="offer-btn">Book Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="offer-image">
+                    <i class="fas fa-train"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section class="testimonials" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our <span>Passengers</span> Say</h2>
+                <p>Real experiences from real travellers</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Amazing experience booking with RAIL. The interface is super smooth and I got confirmed tickets instantly!"</p>
+                    <div class="testimonial-user">
+                        <i class="fas fa-user-circle"></i>
+                        <div>
+                            <h4>Priya Sharma</h4>
+                            <span>Delhi → Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Best train booking website I've used. Clean UI, quick search, and the mobile app works perfectly too."</p>
+                    <div class="testimonial-user">
+                        <i class="fas fa-user-circle"></i>
+                        <div>
+                            <h4>Rahul Verma</h4>
+                            <span>Mumbai → Goa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Love the food booking feature! Got fresh meals delivered right to my seat. Highly recommended."</p>
+                    <div class="testimonial-user">
+                        <i class="fas fa-user-circle"></i>
+                        <div>
+                            <h4>Amit Kumar</h4>
+                            <span>Delhi → Kolkata</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>🚂 RAIL</h3>
+                    <p>Indian Railways Official Partner. Book train tickets online with ease and convenience.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="trains.html">Search Trains</a>
+                    <a href="train-list.html">Train List</a>
+                    <a href="seat-availability.html">Seat Availability</a>
+                    <a href="rail-drishti.html">Rail Dishti</a>
+                    <a href="food-booking.html">Food Booking</a>
+                    <a href="flight-service.html">Flight Service</a>
+                    <a href="safe&secure.html">Safe & Secure</a>
+                    <a href="easy-cancellation.html">Cancellation</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="help.html">Help</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Your Account</h4>
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                    <a href="profile.html">Profile</a>
+                    <a href="account.html">Account Settings</a>
+                    <a href="bookings.html">My Bookings</a>
+                    <a href="feedback.html">Feedback</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> 139 (24x7)</p>
+                    <p><i class="fas fa-envelope"></i> care@rail.co.in</p>
+                    <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RAIL. All Rights Reserved. | Designed with ❤️ for Indian Railways</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  NAVBAR SCROLL EFFECT
+        // ============================================================
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        //  COUNTER ANIMATION
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter');
+
+            const animateCounter = (counter) => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const step = Math.max(1, Math.floor(target / 60));
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        return;
+                    }
+                    counter.textContent = current.toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                };
+
+                updateCounter();
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        animateCounter(counter);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        });
+
+        // ============================================================
+        //  SWAP STATIONS
+        // ============================================================
+        function swapStations() {
+            const from = document.getElementById('fromStation');
+            const to = document.getElementById('toStation');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+
+            const btn = document.getElementById('swapStations');
+            btn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                btn.style.transform = 'rotate(0deg)';
+            }, 400);
+        }
+
+        // ============================================================
+        //  SEARCH TAB SWITCH
+        // ============================================================
+        function switchTab(tab, element) {
+            document.querySelectorAll('.search-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            const form = document.getElementById('searchForm');
+            if (tab === 'train') {
+                form.action = 'trains.html';
+            } else if (tab === 'bus') {
+                form.action = '#';
+                alert('🚌 Bus booking coming soon!');
+            } else if (tab === 'flight') {
+                form.action = 'flight-service.html';
+                alert('✈️ Redirecting to Flight Service...');
+            } else if (tab === 'hotel') {
+                form.action = '#';
+                alert('🏨 Hotel booking coming soon!');
+            }
+        }
+
+        // ============================================================
+        //  SEARCH ROUTE — Auto-fills and goes to trains.html
+        // ============================================================
+        function searchRoute(from, to) {
+            window.location.href = `trains.html?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+        }
+
+        // ============================================================
+        //  SET MIN DATE TO TODAY
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('journeyDate');
+            dateInput.setAttribute('min', today);
+            dateInput.value = today;
+        });
+
+        // ============================================================
+        //  STATION SUGGESTIONS
+        // ============================================================
+        const stations = ['Delhi', 'Mumbai', 'Kolkata', 'Chennai', 'Bangalore', 'Hyderabad',
+            'Ahmedabad', 'Pune', 'Jaipur', 'Lucknow', 'Patna', 'Bhopal',
+            'Nagpur', 'Surat', 'Varanasi', 'Amritsar', 'Agra', 'Chandigarh',
+            'Mangalore', 'Madgaon', 'Ernakulam', 'Coimbatore', 'Visakhapatnam',
+            'Bhubaneswar', 'Guwahati', 'Jammu Tawi'
+        ];
+
+        function getSuggestions(input) {
+            const value = input.value.toLowerCase();
+            return stations.filter(s => s.toLowerCase().includes(value));
+        }
+
+        document.getElementById('fromStation').addEventListener('input', function() {
+            showSuggestions('fromSuggestions', this);
+        });
+
+        document.getElementById('toStation').addEventListener('input', function() {
+            showSuggestions('toSuggestions', this);
+        });
+
+        function showSuggestions(id, input) {
+            const container = document.getElementById(id);
+            const suggestions = getSuggestions(input);
+            if (suggestions.length > 0 && input.value.length > 0) {
+                container.innerHTML = suggestions.map(s =>
+                    `<div class="suggestion-item" onclick="selectSuggestion('${s}', '${input.id}')">${s}</div>`
+                ).join('');
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        function selectSuggestion(value, inputId) {
+            document.getElementById(inputId).value = value;
+            document.getElementById(inputId + 'Suggestions').style.display = 'none';
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.form-group')) {
+                document.querySelectorAll('.suggestions').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+        });
+
+        // ============================================================
+        //  SMOOTH SCROLL
+        // ============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        console.log('🚂 RAIL – Home loaded successfully!');
+    </script>
+
+</body>
+</html>

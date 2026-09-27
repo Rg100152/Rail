@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Booking – RAIL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .top-bar {
+            background: #0d0d1a;
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .login-btn {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+
+        .top-bar-right .login-btn:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .register-btn {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+        }
+
+        .top-bar-right .register-btn:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 14px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1a1a2e;
+        }
+
+        .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #6c757d;
+            display: block;
+            margin-top: -2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #1a1a2e;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.08);
+        }
+
+        .nav-links .nav-login {
+            background: #2ecc71;
+            color: #fff !important;
+            padding: 10px 24px;
+        }
+
+        .nav-links .nav-login:hover {
+            background: #27ae60;
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.3);
+            color: #fff !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 35px 20px 25px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin: 20px 0 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .page-header h1 span {
+            color: #ff4757;
+        }
+
+        .page-header p {
+            color: #6c757d;
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+
+        .search-section {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 24px 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 30px;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 14px;
+            align-items: end;
+        }
+
+        .search-row .form-group label {
+            display: block;
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-row .form-group label i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        .search-row .form-group input,
+        .search-row .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+            color: #1a1a2e;
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-row .form-group input:focus,
+        .search-row .form-group select:focus {
+            border-color: #2ecc71;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .search-row .form-group input::placeholder {
+            color: #adb5bd;
+        }
+
+        .search-btn {
+            background: #2ecc71;
+            color: #0d0d1a;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            height: 44px;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: #27ae60;
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.25);
+        }
+
+        .search-btn i {
+            margin-right: 6px;
+        }
+
+        .bus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .bus-card {
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .bus-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.10);
+        }
+
+        .bus-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .bus-info {
+            padding: 16px 18px 20px;
+        }
+
+        .bus-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .bus-route {
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .bus-route i {
+            color: #2ecc71;
+            margin: 0 4px;
+        }
+
+        .bus-details {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .bus-details span i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        .bus-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bus-price {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        .bus-price small {
+            font-size: 11px;
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        .btn-book {
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-book:hover {
+            background: #e63946;
+            transform: scale(1.04);
+        }
+
+        .btn-book.booked {
+            background: #2ecc71;
+        }
+
+        .footer-dev {
+            text-align: center;
+            padding: 30px 0 15px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .footer-dev strong {
+            color: #2ecc71;
+        }
+
+        .cart-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0d0d1a;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 16px;
+            display: none;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 9999;
+            animation: slideUp 0.35s ease;
+        }
+
+        .cart-notification.show {
+            display: flex;
+        }
+
+        .cart-notification .icon {
+            color: #2ecc71;
+            font-size: 20px;
+        }
+
+        .cart-notification .text strong {
+            color: #2ecc71;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: #0d0d1a;
+            color: #adb5bd;
+            padding: 25px 0 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 40px;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        footer .links {
+            display: flex;
+            gap: 16px;
+        }
+
+        footer .links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        footer .links a:hover {
+            color: #2ecc71;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .search-btn {
+                grid-column: span 2;
+            }
+
+            .bus-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .cart-notification {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                justify-content: center;
+                padding: 12px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bus-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-btn {
+                grid-column: span 1;
+            }
+
+            .page-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .search-section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="register-btn"><i class="fas fa-user-plus"></i> Register</a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="search.html">SEARCH</a></li>
+                <li><a href="bus-booking.html" class="active">BUS</a></li>
+                <li><a href="food-booking.html">FOOD</a></li>
+                <li><a href="services.html">SERVICES</a></li>
+                <li><a href="login.html" class="nav-login">LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>🚌 <span>Bus</span> Booking</h1>
+            <p>Book comfortable bus tickets for your journey across India</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-row">
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> From</label>
+                    <input type="text" id="fromCity" placeholder="Enter city name" />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-map-marker-alt"></i> To</label>
+                    <input type="text" id="toCity" placeholder="Enter city name" />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> Date</label>
+                    <input type="date" id="busDate" />
+                </div>
+                <button class="search-btn" onclick="searchBuses()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+
+        <div class="bus-grid" id="busContainer"></div>
+
+        <div class="footer-dev">
+            Developed by <strong>Pankaj Yadav</strong>
+        </div>
+
+    </div>
+
+    <div class="cart-notification" id="cartNotification">
+        <span class="icon"><i class="fas fa-check-circle"></i></span>
+        <span class="text">Bus booked: <strong id="busName">Bus</strong></span>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 RAIL. All Rights Reserved.</p>
+            <div class="links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        const buses = [
+            {
+                id: 1,
+                name: "SRS Travels",
+                route: "Delhi → Mumbai",
+                time: "16:30",
+                duration: "18h 45m",
+                seats: "42",
+                price: "₹1,299",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7ZfGbxNAcgU6xSbK0CjqfUL9xwNqZTwMUXH0-19uAbQ&s=10"
+            },
+            {
+                id: 2,
+                name: "VRL Logistics",
+                route: "Mumbai → Pune",
+                time: "08:15",
+                duration: "4h 30m",
+                seats: "38",
+                price: "₹499",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQacRSqTvYWf_xwy1y-DpsBMdG60MvkyaQ13qsnVYGc2g&s=10"
+            },
+            {
+                id: 3,
+                name: "Neeta Travels",
+                route: "Pune → Goa",
+                time: "22:00",
+                duration: "10h 15m",
+                seats: "45",
+                price: "₹899",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq4lCkPSuypXLjNa-XG7tthOyJvT3Ml3rq3DuW2u3Azg&s=10"
+            },
+            {
+                id: 4,
+                name: "Orange Travels",
+                route: "Delhi → Jaipur",
+                time: "06:30",
+                duration: "5h 20m",
+                seats: "40",
+                price: "₹599",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgpKuAX2qQRcloaxaK7iWHeHVCrdTbR71VUPvZtUPssg&s=10"
+            },
+            {
+                id: 5,
+                name: "Sharma Transports",
+                route: "Delhi → Chandigarh",
+                time: "09:45",
+                duration: "4h 50m",
+                seats: "36",
+                price: "₹449",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQagPEOBaWOm8JxjIUhFdYKpCNlGr2_MkD-h_QJxmXLuQ&s=10"
+            },
+            {
+                id: 6,
+                name: "KSRTC",
+                route: "Bangalore → Chennai",
+                time: "07:00",
+                duration: "6h 10m",
+                seats: "50",
+                price: "₹699",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMrh92XBWLz9bcECwLFZy9MfBpasbFC9R4NXGIe2G6sA&s=10"
+            }
+        ];
+
+        function renderBuses(items) {
+            const container = document.getElementById('busContainer');
+            container.innerHTML = '';
+
+            items.forEach(bus => {
+                const card = document.createElement('div');
+                card.className = 'bus-card';
+                card.innerHTML = `
+                    <img src="${bus.img}" alt="${bus.name}" class="bus-img" loading="lazy" />
+                    <div class="bus-info">
+                        <div class="bus-name">${bus.name}</div>
+                        <div class="bus-route"><i class="fas fa-arrow-right"></i> ${bus.route}</div>
+                        <div class="bus-details">
+                            <span><i class="fas fa-clock"></i> ${bus.time}</span>
+                            <span><i class="fas fa-hourglass-half"></i> ${bus.duration}</span>
+                            <span><i class="fas fa-chair"></i> ${bus.seats} seats</span>
+                        </div>
+                        <div class="bus-footer">
+                            <span class="bus-price">${bus.price} <small>per seat</small></span>
+                            <button class="btn-book" data-name="${bus.name}" onclick="bookBus(this)">
+                                <i class="fas fa-ticket-alt"></i> Book
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        let cartTimeout;
+
+        function bookBus(btn) {
+            const name = btn.getAttribute('data-name');
+            const notification = document.getElementById('cartNotification');
+            const busName = document.getElementById('busName');
+
+            btn.innerHTML = '<i class="fas fa-check"></i> Booked';
+            btn.classList.add('booked');
+
+            busName.textContent = name;
+            notification.classList.add('show');
+
+            clearTimeout(cartTimeout);
+            cartTimeout = setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-ticket-alt"></i> Book';
+                    btn.classList.remove('booked');
+                }, 300);
+            }, 2500);
+
+            if (navigator.vibrate) navigator.vibrate(30);
+        }
+
+        function searchBuses() {
+            const from = document.getElementById('fromCity').value.trim().toLowerCase();
+            const to = document.getElementById('toCity').value.trim().toLowerCase();
+
+            if (!from && !to) {
+                renderBuses(buses);
+                return;
+            }
+
+            const filtered = buses.filter(bus => {
+                const route = bus.route.toLowerCase();
+                const matchFrom = from ? route.includes(from) : true;
+                const matchTo = to ? route.includes(to) : true;
+                return matchFrom && matchTo;
+            });
+
+            renderBuses(filtered);
+
+            if (filtered.length === 0) {
+                const container = document.getElementById('busContainer');
+                container.innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6c757d;background:#fff;border-radius:18px;">
+                        <i class="fas fa-bus" style="font-size:48px;color:#2ecc71;margin-bottom:12px;display:block;"></i>
+                        <h3 style="font-size:18px;font-weight:700;">No buses found</h3>
+                        <p style="font-size:14px;">Try searching for a different route</p>
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBuses(buses);
+
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('busDate');
+            dateInput.setAttribute('min', today);
+            dateInput.value = today;
+        });
+    </script>
+
+</body>
+</html>

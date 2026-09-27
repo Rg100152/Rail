@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Train List – RAIL</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+                   ROOT VARIABLES
+                ============================ */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.1);
+            --primary-green: #2ecc71;
+            --primary-blue: #3498db;
+            --primary-yellow: #f1c40f;
+            --primary-red: #e63946;
+            --text-white: #fff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ============================
+                   RESET & BASE
+                ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 40%, #0d1f3c 100%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* ============================
+                   TOP BAR
+                ============================ */
+        .top-bar {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .top-bar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .top-bar-left span:hover {
+            color: #fff;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+                   NAVBAR
+                ============================ */
+        .navbar {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            position: sticky;
+            top: 44px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+            animation: bounceTrain 3s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #adb5bd;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #2ecc71;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.12);
+        }
+
+        .nav-links .login-btn {
+            background: #2ecc71;
+            color: #0d0d1a !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .login-btn::after {
+            display: none;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+            color: #0d0d1a !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   PAGE HEADER
+                ============================ */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header h1 span {
+            color: #2ecc71;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+
+        .page-header .stats-badge {
+            display: inline-flex;
+            gap: 20px;
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .page-header .stats-badge span {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .page-header .stats-badge span strong {
+            color: #2ecc71;
+            font-weight: 700;
+        }
+
+        /* ============================
+                   SEARCH & FILTER
+                ============================ */
+        .search-filter {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .search-filter .search-wrapper {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-filter .search-wrapper input {
+            width: 100%;
+            padding: 12px 18px 12px 44px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-filter .search-wrapper input:focus {
+            border-color: #2ecc71;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .search-filter .search-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-filter .search-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .search-filter .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-filter .filter-group select {
+            padding: 12px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            min-width: 140px;
+        }
+
+        .search-filter .filter-group select:focus {
+            border-color: #2ecc71;
+        }
+
+        .search-filter .filter-group select option {
+            color: #1a1a2e;
+            background: #fff;
+        }
+
+        .search-filter .filter-group .clear-btn {
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        .search-filter .filter-group .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        /* ============================
+                   TRAIN LIST TABLE
+                ============================ */
+        .table-container {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .table-container thead {
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .table-container thead th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .table-container tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .table-container tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .table-container tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .table-container tbody td {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+        }
+
+        .table-container tbody td .train-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .table-container tbody td .train-code {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            display: block;
+        }
+
+        .table-container tbody td .status-badge {
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .table-container tbody td .status-badge.active {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .table-container tbody td .status-badge.inactive {
+            background: rgba(230, 57, 70, 0.15);
+            color: #e63946;
+        }
+
+        .table-container tbody td .status-badge.maintenance {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f1c40f;
+        }
+
+        .table-container tbody td .view-btn {
+            padding: 6px 16px;
+            background: rgba(46, 204, 113, 0.12);
+            color: #2ecc71;
+            border: none;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .table-container tbody td .view-btn:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+            transform: translateY(-2px);
+        }
+
+        /* ============================
+                   PAGINATION
+                ============================ */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 24px 0 10px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 10px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        .pagination button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .pagination button.active {
+            background: #2ecc71;
+            color: #0d0d1a;
+            border-color: #2ecc71;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* ============================
+                   TOAST
+                ============================ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: rgba(13, 13, 26, 0.92);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            display: none;
+            align-items: center;
+            gap: 14px;
+            color: #fff;
+            font-size: 14px;
+            animation: slideUp 0.4s ease;
+            max-width: 420px;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast i {
+            font-size: 24px;
+        }
+
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: color 0.3s;
+        }
+
+        .toast .toast-close:hover {
+            color: #fff;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+                   FOOTER
+                ============================ */
+        footer {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px 0 20px;
+            color: #adb5bd;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 20px;
+        }
+
+        footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        footer .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        footer .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   RESPONSIVE
+                ============================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                gap: 4px;
+                background: rgba(13, 13, 26, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 12px;
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header .stats-badge {
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 8px 16px;
+            }
+
+            .search-filter {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .search-filter .filter-group {
+                width: 100%;
+            }
+
+            .search-filter .filter-group select {
+                flex: 1;
+                min-width: 100px;
+            }
+
+            .table-container tbody td,
+            .table-container thead th {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .toast {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .search-filter .filter-group {
+                flex-direction: column;
+            }
+
+            .search-filter .filter-group select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="search.html"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="train-list.html" class="active"><i class="fas fa-list"></i> TRAINS</a></li>
+                <li><a href="service.html"><i class="fas fa-concierge-bell"></i> SERVICES</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== CONTENT ==================== -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🚂 <span>Train</span> List</h1>
+            <p>Complete list of all trains with station details across India</p>
+            <div class="stats-badge">
+                <span>🚆 <strong id="totalTrains">0</strong> Trains</span>
+                <span>📍 <strong id="totalStations">0</strong> Stations</span>
+                <span>🏛️ <strong>23</strong> States</span>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by train name, number, or station..." onkeyup="filterTrains()" />
+            </div>
+            <div class="filter-group">
+                <select id="zoneFilter" onchange="filterTrains()">
+                    <option value="all">All Zones</option>
+                    <option value="CR">Central</option>
+                    <option value="ER">Eastern</option>
+                    <option value="NR">Northern</option>
+                    <option value="NER">North Eastern</option>
+                    <option value="NWR">North Western</option>
+                    <option value="SR">Southern</option>
+                    <option value="SCR">South Central</option>
+                    <option value="SER">South Eastern</option>
+                    <option value="SWR">South Western</option>
+                    <option value="WR">Western</option>
+                    <option value="WCR">West Central</option>
+                    <option value="ECR">East Central</option>
+                    <option value="SECR">South East Central</option>
+                </select>
+                <select id="statusFilter" onchange="filterTrains()">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+                <button class="clear-btn" onclick="clearFilters()"><i class="fas fa-undo"></i> Clear</button>
+            </div>
+        </div>
+
+        <!-- Train Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Train No.</th>
+                        <th>Train Name</th>
+                        <th>Zone</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Stations</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="trainTableBody">
+                    <!-- Rendered by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button onclick="changePage(-1)" id="prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span id="pageInfo" style="display:flex;align-items:center;color:rgba(255,255,255,0.4);font-size:14px;padding:0 12px;">Page 1 of 1</span>
+            <button onclick="changePage(1)" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color:#2ecc71;"></i>
+        <span id="toastMessage">Action completed!</span>
+        <button class="toast-close" onclick="closeToast()">×</button>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 RAIL. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  COMPLETE INDIAN TRAIN DATA (150+ Trains with 100+ Stations)
+        // ============================================================
+        const trains = [{
+            id: 1,
+            number: '12001',
+            name: 'Bhopal Shatabdi Express',
+            zone: 'WCR',
+            source: 'Bhopal',
+            destination: 'Delhi',
+            stations: ['Bhopal', 'Vidisha', 'Guna', 'Shivpuri', 'Gwalior', 'Agra', 'Mathura', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 2,
+            number: '12002',
+            name: 'Bhopal Shatabdi Express',
+            zone: 'WCR',
+            source: 'Delhi',
+            destination: 'Bhopal',
+            stations: ['Delhi', 'Mathura', 'Agra', 'Gwalior', 'Shivpuri', 'Guna', 'Vidisha', 'Bhopal'],
+            status: 'active'
+        }, {
+            id: 3,
+            number: '12259',
+            name: 'Sealdah Duronto Express',
+            zone: 'ER',
+            source: 'Sealdah',
+            destination: 'Delhi',
+            stations: ['Sealdah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Varanasi', 'Lucknow', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 4,
+            number: '12260',
+            name: 'Sealdah Duronto Express',
+            zone: 'ER',
+            source: 'Delhi',
+            destination: 'Sealdah',
+            stations: ['Delhi', 'Lucknow', 'Varanasi', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Sealdah'],
+            status: 'active'
+        }, {
+            id: 5,
+            number: '12301',
+            name: 'Howrah Rajdhani Express',
+            zone: 'ER',
+            source: 'Howrah',
+            destination: 'New Delhi',
+            stations: ['Howrah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Mughalsarai', 'Allahabad', 'Kanpur', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 6,
+            number: '12302',
+            name: 'Howrah Rajdhani Express',
+            zone: 'ER',
+            source: 'New Delhi',
+            destination: 'Howrah',
+            stations: ['New Delhi', 'Kanpur', 'Allahabad', 'Mughalsarai', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Howrah'],
+            status: 'active'
+        }, {
+            id: 7,
+            number: '12303',
+            name: 'Poorva Express',
+            zone: 'ER',
+            source: 'Howrah',
+            destination: 'New Delhi',
+            stations: ['Howrah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Varanasi', 'Lucknow', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 8,
+            number: '12304',
+            name: 'Poorva Express',
+            zone: 'ER',
+            source: 'New Delhi',
+            destination: 'Howrah',
+            stations: ['New Delhi', 'Lucknow', 'Varanasi', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Howrah'],
+            status: 'active'
+        }, {
+            id: 9,
+            number: '12401',
+            name: 'Magadh Express',
+            zone: 'ECR',
+            source: 'New Delhi',
+            destination: 'Gaya',
+            stations: ['New Delhi', 'Agra', 'Kanpur', 'Allahabad', 'Mughalsarai', 'Gaya'],
+            status: 'active'
+        }, {
+            id: 10,
+            number: '12402',
+            name: 'Magadh Express',
+            zone: 'ECR',
+            source: 'Gaya',
+            destination: 'New Delhi',
+            stations: ['Gaya', 'Mughalsarai', 'Allahabad', 'Kanpur', 'Agra', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 11,
+            number: '12901',
+            name: 'Gujarat Mail',
+            zone: 'WR',
+            source: 'Mumbai Central',
+            destination: 'Ahmedabad',
+            stations: ['Mumbai Central', 'Bandra', 'Vapi', 'Surat', 'Vadodara', 'Nadiad', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 12,
+            number: '12902',
+            name: 'Gujarat Mail',
+            zone: 'WR',
+            source: 'Ahmedabad',
+            destination: 'Mumbai Central',
+            stations: ['Ahmedabad', 'Nadiad', 'Vadodara', 'Surat', 'Vapi', 'Bandra', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 13,
+            number: '12905',
+            name: 'Howrah Rajdhani Express',
+            zone: 'ER',
+            source: 'Howrah',
+            destination: 'New Delhi',
+            stations: ['Howrah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Allahabad', 'Kanpur', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 14,
+            number: '12906',
+            name: 'Howrah Rajdhani Express',
+            zone: 'ER',
+            source: 'New Delhi',
+            destination: 'Howrah',
+            stations: ['New Delhi', 'Kanpur', 'Allahabad', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Howrah'],
+            status: 'active'
+        }, {
+            id: 15,
+            number: '12951',
+            name: 'Mumbai Rajdhani Express',
+            zone: 'WR',
+            source: 'Mumbai Central',
+            destination: 'New Delhi',
+            stations: ['Mumbai Central', 'Surat', 'Vadodara', 'Ratlam', 'Kota', 'Sawai Madhopur', 'Mathura', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 16,
+            number: '12952',
+            name: 'Mumbai Rajdhani Express',
+            zone: 'WR',
+            source: 'New Delhi',
+            destination: 'Mumbai Central',
+            stations: ['New Delhi', 'Mathura', 'Sawai Madhopur', 'Kota', 'Ratlam', 'Vadodara', 'Surat', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 17,
+            number: '12953',
+            name: 'August Kranti Rajdhani Express',
+            zone: 'WR',
+            source: 'Mumbai Central',
+            destination: 'New Delhi',
+            stations: ['Mumbai Central', 'Surat', 'Vadodara', 'Ratlam', 'Kota', 'Sawai Madhopur', 'Mathura', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 18,
+            number: '12954',
+            name: 'August Kranti Rajdhani Express',
+            zone: 'WR',
+            source: 'New Delhi',
+            destination: 'Mumbai Central',
+            stations: ['New Delhi', 'Mathura', 'Sawai Madhopur', 'Kota', 'Ratlam', 'Vadodara', 'Surat', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 19,
+            number: '12955',
+            name: 'Jaipur Mumbai Central SF Express',
+            zone: 'NWR',
+            source: 'Jaipur',
+            destination: 'Mumbai Central',
+            stations: ['Jaipur', 'Ajmer', 'Pali', 'Abu Road', 'Ahmedabad', 'Vadodara', 'Surat', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 20,
+            number: '12956',
+            name: 'Jaipur Mumbai Central SF Express',
+            zone: 'NWR',
+            source: 'Mumbai Central',
+            destination: 'Jaipur',
+            stations: ['Mumbai Central', 'Surat', 'Vadodara', 'Ahmedabad', 'Abu Road', 'Pali', 'Ajmer', 'Jaipur'],
+            status: 'active'
+        }, {
+            id: 21,
+            number: '13005',
+            name: 'Howrah Amritsar Mail',
+            zone: 'ER',
+            source: 'Howrah',
+            destination: 'Amritsar',
+            stations: ['Howrah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Varanasi', 'Lucknow', 'Delhi', 'Ludhiana',
+                'Amritsar'
+            ],
+            status: 'active'
+        }, {
+            id: 22,
+            number: '13006',
+            name: 'Amritsar Howrah Mail',
+            zone: 'ER',
+            source: 'Amritsar',
+            destination: 'Howrah',
+            stations: ['Amritsar', 'Ludhiana', 'Delhi', 'Lucknow', 'Varanasi', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur',
+                'Howrah'
+            ],
+            status: 'active'
+        }, {
+            id: 23,
+            number: '13105',
+            name: 'Sealdah Ballia Express',
+            zone: 'ER',
+            source: 'Sealdah',
+            destination: 'Ballia',
+            stations: ['Sealdah', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Varanasi', 'Ballia'],
+            status: 'active'
+        }, {
+            id: 24,
+            number: '13106',
+            name: 'Ballia Sealdah Express',
+            zone: 'ER',
+            source: 'Ballia',
+            destination: 'Sealdah',
+            stations: ['Ballia', 'Varanasi', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Sealdah'],
+            status: 'active'
+        }, {
+            id: 25,
+            number: '14001',
+            name: 'Delhi Rewari Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Rewari',
+            stations: ['Delhi', 'Gurugram', 'Rewari'],
+            status: 'active'
+        }, {
+            id: 26,
+            number: '14002',
+            name: 'Rewari Delhi Express',
+            zone: 'NR',
+            source: 'Rewari',
+            destination: 'Delhi',
+            stations: ['Rewari', 'Gurugram', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 27,
+            number: '15001',
+            name: 'Gorakhpur Delhi Express',
+            zone: 'NER',
+            source: 'Gorakhpur',
+            destination: 'Delhi',
+            stations: ['Gorakhpur', 'Basti', 'Lucknow', 'Moradabad', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 28,
+            number: '15002',
+            name: 'Delhi Gorakhpur Express',
+            zone: 'NER',
+            source: 'Delhi',
+            destination: 'Gorakhpur',
+            stations: ['Delhi', 'Moradabad', 'Lucknow', 'Basti', 'Gorakhpur'],
+            status: 'active'
+        }, {
+            id: 29,
+            number: '15201',
+            name: 'Patna Delhi Express',
+            zone: 'ECR',
+            source: 'Patna',
+            destination: 'Delhi',
+            stations: ['Patna', 'Gaya', 'Mughalsarai', 'Allahabad', 'Kanpur', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 30,
+            number: '15202',
+            name: 'Delhi Patna Express',
+            zone: 'ECR',
+            source: 'Delhi',
+            destination: 'Patna',
+            stations: ['Delhi', 'Kanpur', 'Allahabad', 'Mughalsarai', 'Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 31,
+            number: '15601',
+            name: 'Guwahati Delhi Express',
+            zone: 'NER',
+            source: 'Guwahati',
+            destination: 'Delhi',
+            stations: ['Guwahati', 'Bongaigaon', 'New Jalpaiguri', 'Katihar', 'Patna', 'Varanasi', 'Lucknow', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 32,
+            number: '15602',
+            name: 'Delhi Guwahati Express',
+            zone: 'NER',
+            source: 'Delhi',
+            destination: 'Guwahati',
+            stations: ['Delhi', 'Lucknow', 'Varanasi', 'Patna', 'Katihar', 'New Jalpaiguri', 'Bongaigaon', 'Guwahati'],
+            status: 'active'
+        }, {
+            id: 33,
+            number: '15901',
+            name: 'Dibrugarh Delhi Express',
+            zone: 'NER',
+            source: 'Dibrugarh',
+            destination: 'Delhi',
+            stations: ['Dibrugarh', 'Tinsukia', 'Guwahati', 'Bongaigaon', 'New Jalpaiguri', 'Katihar', 'Patna', 'Varanasi',
+                'Lucknow', 'Delhi'
+            ],
+            status: 'maintenance'
+        }, {
+            id: 34,
+            number: '15902',
+            name: 'Delhi Dibrugarh Express',
+            zone: 'NER',
+            source: 'Delhi',
+            destination: 'Dibrugarh',
+            stations: ['Delhi', 'Lucknow', 'Varanasi', 'Patna', 'Katihar', 'New Jalpaiguri', 'Bongaigaon', 'Guwahati',
+                'Tinsukia', 'Dibrugarh'
+            ],
+            status: 'maintenance'
+        }, {
+            id: 35,
+            number: '16301',
+            name: 'Trivandrum Central Express',
+            zone: 'SR',
+            source: 'Trivandrum',
+            destination: 'Chennai',
+            stations: ['Trivandrum', 'Kollam', 'Alappuzha', 'Ernakulam', 'Thrissur', 'Palakkad', 'Coimbatore', 'Tirupur',
+                'Erode', 'Salem', 'Chennai'
+            ],
+            status: 'active'
+        }, {
+            id: 36,
+            number: '16302',
+            name: 'Chennai Trivandrum Express',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Trivandrum',
+            stations: ['Chennai', 'Salem', 'Erode', 'Tirupur', 'Coimbatore', 'Palakkad', 'Thrissur', 'Ernakulam', 'Alappuzha',
+                'Kollam', 'Trivandrum'
+            ],
+            status: 'active'
+        }, {
+            id: 37,
+            number: '16303',
+            name: 'Vanchinad Express',
+            zone: 'SR',
+            source: 'Trivandrum',
+            destination: 'Ernakulam',
+            stations: ['Trivandrum', 'Kollam', 'Alappuzha', 'Ernakulam'],
+            status: 'active'
+        }, {
+            id: 38,
+            number: '16304',
+            name: 'Vanchinad Express',
+            zone: 'SR',
+            source: 'Ernakulam',
+            destination: 'Trivandrum',
+            stations: ['Ernakulam', 'Alappuzha', 'Kollam', 'Trivandrum'],
+            status: 'active'
+        }, {
+            id: 39,
+            number: '16601',
+            name: 'Mangalore Central Express',
+            zone: 'SR',
+            source: 'Mangalore',
+            destination: 'Chennai',
+            stations: ['Mangalore', 'Udupi', 'Kasaragod', 'Kannur', 'Kozhikode', 'Palakkad', 'Coimbatore', 'Tirupur', 'Erode',
+                'Salem', 'Chennai'
+            ],
+            status: 'active'
+        }, {
+            id: 40,
+            number: '16602',
+            name: 'Chennai Mangalore Express',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Mangalore',
+            stations: ['Chennai', 'Salem', 'Erode', 'Tirupur', 'Coimbatore', 'Palakkad', 'Kozhikode', 'Kannur', 'Kasaragod',
+                'Udupi', 'Mangalore'
+            ],
+            status: 'active'
+        }, {
+            id: 41,
+            number: '17001',
+            name: 'Sainagar Shirdi Express',
+            zone: 'SCR',
+            source: 'Sainagar Shirdi',
+            destination: 'Hyderabad',
+            stations: ['Sainagar Shirdi', 'Manmad', 'Aurangabad', 'Nanded', 'Hyderabad'],
+            status: 'active'
+        }, {
+            id: 42,
+            number: '17002',
+            name: 'Hyderabad Sainagar Express',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Sainagar Shirdi',
+            stations: ['Hyderabad', 'Nanded', 'Aurangabad', 'Manmad', 'Sainagar Shirdi'],
+            status: 'active'
+        }, {
+            id: 43,
+            number: '17201',
+            name: 'Golconda Express',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Vijayawada',
+            stations: ['Hyderabad', 'Secunderabad', 'Nalgonda', 'Vijayawada'],
+            status: 'active'
+        }, {
+            id: 44,
+            number: '17202',
+            name: 'Golconda Express',
+            zone: 'SCR',
+            source: 'Vijayawada',
+            destination: 'Hyderabad',
+            stations: ['Vijayawada', 'Nalgonda', 'Secunderabad', 'Hyderabad'],
+            status: 'active'
+        }, {
+            id: 45,
+            number: '17301',
+            name: 'Mysuru Bengaluru Express',
+            zone: 'SWR',
+            source: 'Mysuru',
+            destination: 'Bengaluru',
+            stations: ['Mysuru', 'Mandya', 'Bengaluru'],
+            status: 'active'
+        }, {
+            id: 46,
+            number: '17302',
+            name: 'Bengaluru Mysuru Express',
+            zone: 'SWR',
+            source: 'Bengaluru',
+            destination: 'Mysuru',
+            stations: ['Bengaluru', 'Mandya', 'Mysuru'],
+            status: 'active'
+        }, {
+            id: 47,
+            number: '18101',
+            name: 'Tatanagar Jammu Tawi Express',
+            zone: 'SER',
+            source: 'Tatanagar',
+            destination: 'Jammu Tawi',
+            stations: ['Tatanagar', 'Ranchi', 'Patna', 'Varanasi', 'Lucknow', 'Delhi', 'Ludhiana', 'Jammu Tawi'],
+            status: 'active'
+        }, {
+            id: 48,
+            number: '18102',
+            name: 'Jammu Tawi Tatanagar Express',
+            zone: 'SER',
+            source: 'Jammu Tawi',
+            destination: 'Tatanagar',
+            stations: ['Jammu Tawi', 'Ludhiana', 'Delhi', 'Lucknow', 'Varanasi', 'Patna', 'Ranchi', 'Tatanagar'],
+            status: 'active'
+        }, {
+            id: 49,
+            number: '18401',
+            name: 'Puri Delhi Express',
+            zone: 'SER',
+            source: 'Puri',
+            destination: 'Delhi',
+            stations: ['Puri', 'Bhubaneswar', 'Cuttack', 'Balasore', 'Kharagpur', 'Tatanagar', 'Ranchi', 'Gaya', 'Allahabad',
+                'Kanpur', 'Delhi'
+            ],
+            status: 'active'
+        }, {
+            id: 50,
+            number: '18402',
+            name: 'Delhi Puri Express',
+            zone: 'SER',
+            source: 'Delhi',
+            destination: 'Puri',
+            stations: ['Delhi', 'Kanpur', 'Allahabad', 'Gaya', 'Ranchi', 'Tatanagar', 'Kharagpur', 'Balasore', 'Cuttack',
+                'Bhubaneswar', 'Puri'
+            ],
+            status: 'active'
+        }, {
+            id: 51,
+            number: '18601',
+            name: 'Howrah Ranchi Express',
+            zone: 'ER',
+            source: 'Howrah',
+            destination: 'Ranchi',
+            stations: ['Howrah', 'Kharagpur', 'Tatanagar', 'Ranchi'],
+            status: 'active'
+        }, {
+            id: 52,
+            number: '18602',
+            name: 'Ranchi Howrah Express',
+            zone: 'ER',
+            source: 'Ranchi',
+            destination: 'Howrah',
+            stations: ['Ranchi', 'Tatanagar', 'Kharagpur', 'Howrah'],
+            status: 'active'
+        }, {
+            id: 53,
+            number: '18701',
+            name: 'Jabalpur Howrah Express',
+            zone: 'WCR',
+            source: 'Jabalpur',
+            destination: 'Howrah',
+            stations: ['Jabalpur', 'Katni', 'Satna', 'Allahabad', 'Gaya', 'Dhanbad', 'Asansol', 'Howrah'],
+            status: 'inactive'
+        }, {
+            id: 54,
+            number: '18702',
+            name: 'Howrah Jabalpur Express',
+            zone: 'WCR',
+            source: 'Howrah',
+            destination: 'Jabalpur',
+            stations: ['Howrah', 'Asansol', 'Dhanbad', 'Gaya', 'Allahabad', 'Satna', 'Katni', 'Jabalpur'],
+            status: 'inactive'
+        }, {
+            id: 55,
+            number: '19001',
+            name: 'Saurashtra Express',
+            zone: 'WR',
+            source: 'Ahmedabad',
+            destination: 'Mumbai Central',
+            stations: ['Ahmedabad', 'Vadodara', 'Surat', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 56,
+            number: '19002',
+            name: 'Saurashtra Express',
+            zone: 'WR',
+            source: 'Mumbai Central',
+            destination: 'Ahmedabad',
+            stations: ['Mumbai Central', 'Surat', 'Vadodara', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 57,
+            number: '19201',
+            name: 'Ahmedabad Delhi Express',
+            zone: 'WR',
+            source: 'Ahmedabad',
+            destination: 'Delhi',
+            stations: ['Ahmedabad', 'Vadodara', 'Ratlam', 'Kota', 'Sawai Madhopur', 'Mathura', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 58,
+            number: '19202',
+            name: 'Delhi Ahmedabad Express',
+            zone: 'WR',
+            source: 'Delhi',
+            destination: 'Ahmedabad',
+            stations: ['Delhi', 'Mathura', 'Sawai Madhopur', 'Kota', 'Ratlam', 'Vadodara', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 59,
+            number: '19301',
+            name: 'Indore Bhopal Express',
+            zone: 'WCR',
+            source: 'Indore',
+            destination: 'Bhopal',
+            stations: ['Indore', 'Ujjain', 'Bhopal'],
+            status: 'active'
+        }, {
+            id: 60,
+            number: '19302',
+            name: 'Bhopal Indore Express',
+            zone: 'WCR',
+            source: 'Bhopal',
+            destination: 'Indore',
+            stations: ['Bhopal', 'Ujjain', 'Indore'],
+            status: 'active'
+        }, {
+            id: 61,
+            number: '19401',
+            name: 'Ajmer Ahmedabad Express',
+            zone: 'NWR',
+            source: 'Ajmer',
+            destination: 'Ahmedabad',
+            stations: ['Ajmer', 'Pali', 'Abu Road', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 62,
+            number: '19402',
+            name: 'Ahmedabad Ajmer Express',
+            zone: 'NWR',
+            source: 'Ahmedabad',
+            destination: 'Ajmer',
+            stations: ['Ahmedabad', 'Abu Road', 'Pali', 'Ajmer'],
+            status: 'active'
+        }, {
+            id: 63,
+            number: '19501',
+            name: 'Okha Varanasi Express',
+            zone: 'WR',
+            source: 'Okha',
+            destination: 'Varanasi',
+            stations: ['Okha', 'Jamnagar', 'Rajkot', 'Ahmedabad', 'Vadodara', 'Indore', 'Bhopal', 'Allahabad', 'Varanasi'],
+            status: 'active'
+        }, {
+            id: 64,
+            number: '19502',
+            name: 'Varanasi Okha Express',
+            zone: 'WR',
+            source: 'Varanasi',
+            destination: 'Okha',
+            stations: ['Varanasi', 'Allahabad', 'Bhopal', 'Indore', 'Vadodara', 'Ahmedabad', 'Rajkot', 'Jamnagar', 'Okha'],
+            status: 'active'
+        }, {
+            id: 65,
+            number: '19601',
+            name: 'Udaipur Jaipur Express',
+            zone: 'NWR',
+            source: 'Udaipur',
+            destination: 'Jaipur',
+            stations: ['Udaipur', 'Chittorgarh', 'Ajmer', 'Jaipur'],
+            status: 'active'
+        }, {
+            id: 66,
+            number: '19602',
+            name: 'Jaipur Udaipur Express',
+            zone: 'NWR',
+            source: 'Jaipur',
+            destination: 'Udaipur',
+            stations: ['Jaipur', 'Ajmer', 'Chittorgarh', 'Udaipur'],
+            status: 'active'
+        }, {
+            id: 67,
+            number: '19701',
+            name: 'Jodhpur Delhi Express',
+            zone: 'NWR',
+            source: 'Jodhpur',
+            destination: 'Delhi',
+            stations: ['Jodhpur', 'Pali', 'Ajmer', 'Jaipur', 'Alwar', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 68,
+            number: '19702',
+            name: 'Delhi Jodhpur Express',
+            zone: 'NWR',
+            source: 'Delhi',
+            destination: 'Jodhpur',
+            stations: ['Delhi', 'Alwar', 'Jaipur', 'Ajmer', 'Pali', 'Jodhpur'],
+            status: 'active'
+        }, {
+            id: 69,
+            number: '19801',
+            name: 'Bikaner Delhi Express',
+            zone: 'NWR',
+            source: 'Bikaner',
+            destination: 'Delhi',
+            stations: ['Bikaner', 'Jaipur', 'Alwar', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 70,
+            number: '19802',
+            name: 'Delhi Bikaner Express',
+            zone: 'NWR',
+            source: 'Delhi',
+            destination: 'Bikaner',
+            stations: ['Delhi', 'Alwar', 'Jaipur', 'Bikaner'],
+            status: 'active'
+        }, {
+            id: 71,
+            number: '20001',
+            name: 'New Delhi Amritsar Shatabdi',
+            zone: 'NR',
+            source: 'New Delhi',
+            destination: 'Amritsar',
+            stations: ['New Delhi', 'Ambala', 'Ludhiana', 'Amritsar'],
+            status: 'active'
+        }, {
+            id: 72,
+            number: '20002',
+            name: 'Amritsar New Delhi Shatabdi',
+            zone: 'NR',
+            source: 'Amritsar',
+            destination: 'New Delhi',
+            stations: ['Amritsar', 'Ludhiana', 'Ambala', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 73,
+            number: '20003',
+            name: 'Mumbai Central Surat Shatabdi',
+            zone: 'WR',
+            source: 'Mumbai Central',
+            destination: 'Surat',
+            stations: ['Mumbai Central', 'Vapi', 'Surat'],
+            status: 'active'
+        }, {
+            id: 74,
+            number: '20004',
+            name: 'Surat Mumbai Central Shatabdi',
+            zone: 'WR',
+            source: 'Surat',
+            destination: 'Mumbai Central',
+            stations: ['Surat', 'Vapi', 'Mumbai Central'],
+            status: 'active'
+        }, {
+            id: 75,
+            number: '20101',
+            name: 'Delhi Chandigarh Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Chandigarh',
+            stations: ['Delhi', 'Panipat', 'Ambala', 'Chandigarh'],
+            status: 'active'
+        }, {
+            id: 76,
+            number: '20102',
+            name: 'Chandigarh Delhi Express',
+            zone: 'NR',
+            source: 'Chandigarh',
+            destination: 'Delhi',
+            stations: ['Chandigarh', 'Ambala', 'Panipat', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 77,
+            number: '20201',
+            name: 'Lucknow Delhi Express',
+            zone: 'NR',
+            source: 'Lucknow',
+            destination: 'Delhi',
+            stations: ['Lucknow', 'Moradabad', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 78,
+            number: '20202',
+            name: 'Delhi Lucknow Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Lucknow',
+            stations: ['Delhi', 'Moradabad', 'Lucknow'],
+            status: 'active'
+        }, {
+            id: 79,
+            number: '20301',
+            name: 'Patna Gaya Express',
+            zone: 'ECR',
+            source: 'Patna',
+            destination: 'Gaya',
+            stations: ['Patna', 'Gaya'],
+            status: 'active'
+        }, {
+            id: 80,
+            number: '20302',
+            name: 'Gaya Patna Express',
+            zone: 'ECR',
+            source: 'Gaya',
+            destination: 'Patna',
+            stations: ['Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 81,
+            number: '20401',
+            name: 'Ranchi Patna Express',
+            zone: 'ECR',
+            source: 'Ranchi',
+            destination: 'Patna',
+            stations: ['Ranchi', 'Bokaro', 'Dhanbad', 'Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 82,
+            number: '20402',
+            name: 'Patna Ranchi Express',
+            zone: 'ECR',
+            source: 'Patna',
+            destination: 'Ranchi',
+            stations: ['Patna', 'Gaya', 'Dhanbad', 'Bokaro', 'Ranchi'],
+            status: 'active'
+        }, {
+            id: 83,
+            number: '20501',
+            name: 'Guwahati Dibrugarh Express',
+            zone: 'NER',
+            source: 'Guwahati',
+            destination: 'Dibrugarh',
+            stations: ['Guwahati', 'Tinsukia', 'Dibrugarh'],
+            status: 'active'
+        }, {
+            id: 84,
+            number: '20502',
+            name: 'Dibrugarh Guwahati Express',
+            zone: 'NER',
+            source: 'Dibrugarh',
+            destination: 'Guwahati',
+            stations: ['Dibrugarh', 'Tinsukia', 'Guwahati'],
+            status: 'active'
+        }, {
+            id: 85,
+            number: '20601',
+            name: 'Chennai Thiruvananthapuram SF',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Trivandrum',
+            stations: ['Chennai', 'Salem', 'Erode', 'Coimbatore', 'Palakkad', 'Trivandrum'],
+            status: 'active'
+        }, {
+            id: 86,
+            number: '20602',
+            name: 'Thiruvananthapuram Chennai SF',
+            zone: 'SR',
+            source: 'Trivandrum',
+            destination: 'Chennai',
+            stations: ['Trivandrum', 'Palakkad', 'Coimbatore', 'Erode', 'Salem', 'Chennai'],
+            status: 'active'
+        }, {
+            id: 87,
+            number: '20701',
+            name: 'Mangalore Kozhikode Express',
+            zone: 'SR',
+            source: 'Mangalore',
+            destination: 'Kozhikode',
+            stations: ['Mangalore', 'Kasaragod', 'Kannur', 'Kozhikode'],
+            status: 'active'
+        }, {
+            id: 88,
+            number: '20702',
+            name: 'Kozhikode Mangalore Express',
+            zone: 'SR',
+            source: 'Kozhikode',
+            destination: 'Mangalore',
+            stations: ['Kozhikode', 'Kannur', 'Kasaragod', 'Mangalore'],
+            status: 'active'
+        }, {
+            id: 89,
+            number: '20801',
+            name: 'Hyderabad Vijayawada SF',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Vijayawada',
+            stations: ['Hyderabad', 'Secunderabad', 'Vijayawada'],
+            status: 'active'
+        }, {
+            id: 90,
+            number: '20802',
+            name: 'Vijayawada Hyderabad SF',
+            zone: 'SCR',
+            source: 'Vijayawada',
+            destination: 'Hyderabad',
+            stations: ['Vijayawada', 'Secunderabad', 'Hyderabad'],
+            status: 'active'
+        }, {
+            id: 91,
+            number: '20901',
+            name: 'Bengaluru Coimbatore Express',
+            zone: 'SWR',
+            source: 'Bengaluru',
+            destination: 'Coimbatore',
+            stations: ['Bengaluru', 'Salem', 'Coimbatore'],
+            status: 'active'
+        }, {
+            id: 92,
+            number: '20902',
+            name: 'Coimbatore Bengaluru Express',
+            zone: 'SWR',
+            source: 'Coimbatore',
+            destination: 'Bengaluru',
+            stations: ['Coimbatore', 'Salem', 'Bengaluru'],
+            status: 'active'
+        }, {
+            id: 93,
+            number: '21001',
+            name: 'Mumbai Nagpur Express',
+            zone: 'CR',
+            source: 'Mumbai',
+            destination: 'Nagpur',
+            stations: ['Mumbai', 'Thane', 'Kalyan', 'Nasik', 'Bhusawal', 'Nagpur'],
+            status: 'active'
+        }, {
+            id: 94,
+            number: '21002',
+            name: 'Nagpur Mumbai Express',
+            zone: 'CR',
+            source: 'Nagpur',
+            destination: 'Mumbai',
+            stations: ['Nagpur', 'Bhusawal', 'Nasik', 'Kalyan', 'Thane', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 95,
+            number: '21003',
+            name: 'Pune Nagpur Express',
+            zone: 'CR',
+            source: 'Pune',
+            destination: 'Nagpur',
+            stations: ['Pune', 'Daund', 'Ahmednagar', 'Aurangabad', 'Nagpur'],
+            status: 'active'
+        }, {
+            id: 96,
+            number: '21004',
+            name: 'Nagpur Pune Express',
+            zone: 'CR',
+            source: 'Nagpur',
+            destination: 'Pune',
+            stations: ['Nagpur', 'Aurangabad', 'Ahmednagar', 'Daund', 'Pune'],
+            status: 'active'
+        }, {
+            id: 97,
+            number: '21101',
+            name: 'Ahmedabad Mumbai Express',
+            zone: 'WR',
+            source: 'Ahmedabad',
+            destination: 'Mumbai',
+            stations: ['Ahmedabad', 'Vadodara', 'Surat', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 98,
+            number: '21102',
+            name: 'Mumbai Ahmedabad Express',
+            zone: 'WR',
+            source: 'Mumbai',
+            destination: 'Ahmedabad',
+            stations: ['Mumbai', 'Surat', 'Vadodara', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 99,
+            number: '21201',
+            name: 'Delhi Dehradun Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Dehradun',
+            stations: ['Delhi', 'Meerut', 'Haridwar', 'Dehradun'],
+            status: 'active'
+        }, {
+            id: 100,
+            number: '21202',
+            name: 'Dehradun Delhi Express',
+            zone: 'NR',
+            source: 'Dehradun',
+            destination: 'Delhi',
+            stations: ['Dehradun', 'Haridwar', 'Meerut', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 101,
+            number: '21301',
+            name: 'Jaipur Udaipur Express',
+            zone: 'NWR',
+            source: 'Jaipur',
+            destination: 'Udaipur',
+            stations: ['Jaipur', 'Ajmer', 'Chittorgarh', 'Udaipur'],
+            status: 'active'
+        }, {
+            id: 102,
+            number: '21302',
+            name: 'Udaipur Jaipur Express',
+            zone: 'NWR',
+            source: 'Udaipur',
+            destination: 'Jaipur',
+            stations: ['Udaipur', 'Chittorgarh', 'Ajmer', 'Jaipur'],
+            status: 'active'
+        }, {
+            id: 103,
+            number: '21401',
+            name: 'Lucknow Varanasi Express',
+            zone: 'NER',
+            source: 'Lucknow',
+            destination: 'Varanasi',
+            stations: ['Lucknow', 'Sultanpur', 'Jaunpur', 'Varanasi'],
+            status: 'active'
+        }, {
+            id: 104,
+            number: '21402',
+            name: 'Varanasi Lucknow Express',
+            zone: 'NER',
+            source: 'Varanasi',
+            destination: 'Lucknow',
+            stations: ['Varanasi', 'Jaunpur', 'Sultanpur', 'Lucknow'],
+            status: 'active'
+        }, {
+            id: 105,
+            number: '21501',
+            name: 'Kolkata Dhaka Express',
+            zone: 'ER',
+            source: 'Kolkata',
+            destination: 'Dhaka',
+            stations: ['Kolkata', 'Bongaon', 'Dhaka'],
+            status: 'inactive'
+        }, {
+            id: 106,
+            number: '21502',
+            name: 'Dhaka Kolkata Express',
+            zone: 'ER',
+            source: 'Dhaka',
+            destination: 'Kolkata',
+            stations: ['Dhaka', 'Bongaon', 'Kolkata'],
+            status: 'inactive'
+        }, {
+            id: 107,
+            number: '21601',
+            name: 'Jammu Udhampur Express',
+            zone: 'NR',
+            source: 'Jammu',
+            destination: 'Udhampur',
+            stations: ['Jammu', 'Udhampur'],
+            status: 'active'
+        }, {
+            id: 108,
+            number: '21602',
+            name: 'Udhampur Jammu Express',
+            zone: 'NR',
+            source: 'Udhampur',
+            destination: 'Jammu',
+            stations: ['Udhampur', 'Jammu'],
+            status: 'active'
+        }, {
+            id: 109,
+            number: '21701',
+            name: 'Chennai Bangalore Express',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Bengaluru',
+            stations: ['Chennai', 'Vellore', 'Bengaluru'],
+            status: 'active'
+        }, {
+            id: 110,
+            number: '21702',
+            name: 'Bangalore Chennai Express',
+            zone: 'SR',
+            source: 'Bengaluru',
+            destination: 'Chennai',
+            stations: ['Bengaluru', 'Vellore', 'Chennai'],
+            status: 'active'
+        }, {
+            id: 111,
+            number: '21801',
+            name: 'Mumbai Surat Express',
+            zone: 'WR',
+            source: 'Mumbai',
+            destination: 'Surat',
+            stations: ['Mumbai', 'Vapi', 'Surat'],
+            status: 'active'
+        }, {
+            id: 112,
+            number: '21802',
+            name: 'Surat Mumbai Express',
+            zone: 'WR',
+            source: 'Surat',
+            destination: 'Mumbai',
+            stations: ['Surat', 'Vapi', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 113,
+            number: '21901',
+            name: 'Patna Ranchi Express',
+            zone: 'ECR',
+            source: 'Patna',
+            destination: 'Ranchi',
+            stations: ['Patna', 'Gaya', 'Bokaro', 'Ranchi'],
+            status: 'active'
+        }, {
+            id: 114,
+            number: '21902',
+            name: 'Ranchi Patna Express',
+            zone: 'ECR',
+            source: 'Ranchi',
+            destination: 'Patna',
+            stations: ['Ranchi', 'Bokaro', 'Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 115,
+            number: '22001',
+            name: 'New Delhi Bhopal Shatabdi',
+            zone: 'NR',
+            source: 'New Delhi',
+            destination: 'Bhopal',
+            stations: ['New Delhi', 'Agra', 'Gwalior', 'Jhansi', 'Bhopal'],
+            status: 'active'
+        }, {
+            id: 116,
+            number: '22002',
+            name: 'Bhopal New Delhi Shatabdi',
+            zone: 'NR',
+            source: 'Bhopal',
+            destination: 'New Delhi',
+            stations: ['Bhopal', 'Jhansi', 'Gwalior', 'Agra', 'New Delhi'],
+            status: 'active'
+        }, {
+            id: 117,
+            number: '22101',
+            name: 'Mumbai Chennai Express',
+            zone: 'CR',
+            source: 'Mumbai',
+            destination: 'Chennai',
+            stations: ['Mumbai', 'Pune', 'Solapur', 'Guntakal', 'Chennai'],
+            status: 'active'
+        }, {
+            id: 118,
+            number: '22102',
+            name: 'Chennai Mumbai Express',
+            zone: 'CR',
+            source: 'Chennai',
+            destination: 'Mumbai',
+            stations: ['Chennai', 'Guntakal', 'Solapur', 'Pune', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 119,
+            number: '22201',
+            name: 'Kolkata Patna Express',
+            zone: 'ER',
+            source: 'Kolkata',
+            destination: 'Patna',
+            stations: ['Kolkata', 'Durgapur', 'Asansol', 'Dhanbad', 'Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 120,
+            number: '22202',
+            name: 'Patna Kolkata Express',
+            zone: 'ER',
+            source: 'Patna',
+            destination: 'Kolkata',
+            stations: ['Patna', 'Gaya', 'Dhanbad', 'Asansol', 'Durgapur', 'Kolkata'],
+            status: 'active'
+        }, {
+            id: 121,
+            number: '22301',
+            name: 'Delhi Lucknow Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Lucknow',
+            stations: ['Delhi', 'Moradabad', 'Bareilly', 'Lucknow'],
+            status: 'active'
+        }, {
+            id: 122,
+            number: '22302',
+            name: 'Lucknow Delhi Express',
+            zone: 'NR',
+            source: 'Lucknow',
+            destination: 'Delhi',
+            stations: ['Lucknow', 'Bareilly', 'Moradabad', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 123,
+            number: '22401',
+            name: 'Delhi Amritsar Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Amritsar',
+            stations: ['Delhi', 'Panipat', 'Ambala', 'Ludhiana', 'Amritsar'],
+            status: 'active'
+        }, {
+            id: 124,
+            number: '22402',
+            name: 'Amritsar Delhi Express',
+            zone: 'NR',
+            source: 'Amritsar',
+            destination: 'Delhi',
+            stations: ['Amritsar', 'Ludhiana', 'Ambala', 'Panipat', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 125,
+            number: '22501',
+            name: 'Chennai Coimbatore Express',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Coimbatore',
+            stations: ['Chennai', 'Salem', 'Erode', 'Coimbatore'],
+            status: 'active'
+        }, {
+            id: 126,
+            number: '22502',
+            name: 'Coimbatore Chennai Express',
+            zone: 'SR',
+            source: 'Coimbatore',
+            destination: 'Chennai',
+            stations: ['Coimbatore', 'Erode', 'Salem', 'Chennai'],
+            status: 'active'
+        }, {
+            id: 127,
+            number: '22601',
+            name: 'Hyderabad Bangalore Express',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Bengaluru',
+            stations: ['Hyderabad', 'Kurnool', 'Bengaluru'],
+            status: 'active'
+        }, {
+            id: 128,
+            number: '22602',
+            name: 'Bangalore Hyderabad Express',
+            zone: 'SCR',
+            source: 'Bengaluru',
+            destination: 'Hyderabad',
+            stations: ['Bengaluru', 'Kurnool', 'Hyderabad'],
+            status: 'active'
+        }, {
+            id: 129,
+            number: '22701',
+            name: 'Mumbai Pune Express',
+            zone: 'CR',
+            source: 'Mumbai',
+            destination: 'Pune',
+            stations: ['Mumbai', 'Thane', 'Kalyan', 'Pune'],
+            status: 'active'
+        }, {
+            id: 130,
+            number: '22702',
+            name: 'Pune Mumbai Express',
+            zone: 'CR',
+            source: 'Pune',
+            destination: 'Mumbai',
+            stations: ['Pune', 'Kalyan', 'Thane', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 131,
+            number: '22801',
+            name: 'Kolkata Bhubaneswar Express',
+            zone: 'SER',
+            source: 'Kolkata',
+            destination: 'Bhubaneswar',
+            stations: ['Kolkata', 'Kharagpur', 'Balasore', 'Bhubaneswar'],
+            status: 'active'
+        }, {
+            id: 132,
+            number: '22802',
+            name: 'Bhubaneswar Kolkata Express',
+            zone: 'SER',
+            source: 'Bhubaneswar',
+            destination: 'Kolkata',
+            stations: ['Bhubaneswar', 'Balasore', 'Kharagpur', 'Kolkata'],
+            status: 'active'
+        }, {
+            id: 133,
+            number: '22901',
+            name: 'Delhi Ahmedabad Express',
+            zone: 'NWR',
+            source: 'Delhi',
+            destination: 'Ahmedabad',
+            stations: ['Delhi', 'Jaipur', 'Ajmer', 'Ahmedabad'],
+            status: 'active'
+        }, {
+            id: 134,
+            number: '22902',
+            name: 'Ahmedabad Delhi Express',
+            zone: 'NWR',
+            source: 'Ahmedabad',
+            destination: 'Delhi',
+            stations: ['Ahmedabad', 'Ajmer', 'Jaipur', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 135,
+            number: '23001',
+            name: 'Mumbai Hyderabad Express',
+            zone: 'SCR',
+            source: 'Mumbai',
+            destination: 'Hyderabad',
+            stations: ['Mumbai', 'Pune', 'Solapur', 'Hyderabad'],
+            status: 'active'
+        }, {
+            id: 136,
+            number: '23002',
+            name: 'Hyderabad Mumbai Express',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Mumbai',
+            stations: ['Hyderabad', 'Solapur', 'Pune', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 137,
+            number: '23101',
+            name: 'Chennai Bangalore Express',
+            zone: 'SR',
+            source: 'Chennai',
+            destination: 'Bengaluru',
+            stations: ['Chennai', 'Tirupati', 'Bengaluru'],
+            status: 'active'
+        }, {
+            id: 138,
+            number: '23102',
+            name: 'Bangalore Chennai Express',
+            zone: 'SR',
+            source: 'Bengaluru',
+            destination: 'Chennai',
+            stations: ['Bengaluru', 'Tirupati', 'Chennai'],
+            status: 'active'
+        }, {
+            id: 139,
+            number: '23201',
+            name: 'Lucknow Patna Express',
+            zone: 'NER',
+            source: 'Lucknow',
+            destination: 'Patna',
+            stations: ['Lucknow', 'Varanasi', 'Gaya', 'Patna'],
+            status: 'active'
+        }, {
+            id: 140,
+            number: '23202',
+            name: 'Patna Lucknow Express',
+            zone: 'NER',
+            source: 'Patna',
+            destination: 'Lucknow',
+            stations: ['Patna', 'Gaya', 'Varanasi', 'Lucknow'],
+            status: 'active'
+        }, {
+            id: 141,
+            number: '23301',
+            name: 'Delhi Varanasi Express',
+            zone: 'NR',
+            source: 'Delhi',
+            destination: 'Varanasi',
+            stations: ['Delhi', 'Agra', 'Allahabad', 'Varanasi'],
+            status: 'active'
+        }, {
+            id: 142,
+            number: '23302',
+            name: 'Varanasi Delhi Express',
+            zone: 'NR',
+            source: 'Varanasi',
+            destination: 'Delhi',
+            stations: ['Varanasi', 'Allahabad', 'Agra', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 143,
+            number: '23401',
+            name: 'Jaipur Delhi Express',
+            zone: 'NWR',
+            source: 'Jaipur',
+            destination: 'Delhi',
+            stations: ['Jaipur', 'Alwar', 'Delhi'],
+            status: 'active'
+        }, {
+            id: 144,
+            number: '23402',
+            name: 'Delhi Jaipur Express',
+            zone: 'NWR',
+            source: 'Delhi',
+            destination: 'Jaipur',
+            stations: ['Delhi', 'Alwar', 'Jaipur'],
+            status: 'active'
+        }, {
+            id: 145,
+            number: '23501',
+            name: 'Mumbai Udaipur Express',
+            zone: 'WR',
+            source: 'Mumbai',
+            destination: 'Udaipur',
+            stations: ['Mumbai', 'Vadodara', 'Ahmedabad', 'Udaipur'],
+            status: 'active'
+        }, {
+            id: 146,
+            number: '23502',
+            name: 'Udaipur Mumbai Express',
+            zone: 'WR',
+            source: 'Udaipur',
+            destination: 'Mumbai',
+            stations: ['Udaipur', 'Ahmedabad', 'Vadodara', 'Mumbai'],
+            status: 'active'
+        }, {
+            id: 147,
+            number: '23601',
+            name: 'Kolkata Ranchi Express',
+            zone: 'ER',
+            source: 'Kolkata',
+            destination: 'Ranchi',
+            stations: ['Kolkata', 'Kharagpur', 'Tatanagar', 'Ranchi'],
+            status: 'active'
+        }, {
+            id: 148,
+            number: '23602',
+            name: 'Ranchi Kolkata Express',
+            zone: 'ER',
+            source: 'Ranchi',
+            destination: 'Kolkata',
+            stations: ['Ranchi', 'Tatanagar', 'Kharagpur', 'Kolkata'],
+            status: 'active'
+        }, {
+            id: 149,
+            number: '23701',
+            name: 'Hyderabad Vijayawada Express',
+            zone: 'SCR',
+            source: 'Hyderabad',
+            destination: 'Vijayawada',
+            stations: ['Hyderabad', 'Nalgonda', 'Vijayawada'],
+            status: 'active'
+        }, {
+            id: 150,
+            number: '23702',
+            name: 'Vijayawada Hyderabad Express',
+            zone: 'SCR',
+            source: 'Vijayawada',
+            destination: 'Hyderabad',
+            stations: ['Vijayawada', 'Nalgonda', 'Hyderabad'],
+            status: 'active'
+        }];
+
+        // ============================================================
+        //  EXTRACT ALL UNIQUE STATIONS
+        // ============================================================
+        const allStations = [];
+        trains.forEach(train => {
+            train.stations.forEach(station => {
+                if (!allStations.includes(station)) {
+                    allStations.push(station);
+                }
+            });
+        });
+        allStations.sort();
+
+        // ============================================================
+        //  PAGINATION
+        // ============================================================
+        let currentPage = 1;
+        const itemsPerPage = 15;
+        let filteredTrains = [...trains];
+
+        // ============================================================
+        //  RENDER TABLE
+        // ============================================================
+        function renderTable() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = Math.min(start + itemsPerPage, filteredTrains.length);
+            const pageItems = filteredTrains.slice(start, end);
+
+            const tbody = document.getElementById('trainTableBody');
+            tbody.innerHTML = '';
+
+            if (pageItems.length === 0) {
+                tbody.innerHTML =
+                    `<tr><td colspan="8" style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">🚫 No trains found matching your search</td></tr>`;
+                updatePagination();
+                return;
+            }
+
+            pageItems.forEach(train => {
+                const tr = document.createElement('tr');
+
+                const statusClass = train.status === 'active' ? 'active' : train.status === 'inactive' ? 'inactive' :
+                    'maintenance';
+                const statusLabel = train.status.charAt(0).toUpperCase() + train.status.slice(1);
+
+                tr.innerHTML = `
+                            <td><span style="font-weight:700;color:#fff;">${train.number}</span></td>
+                            <td>
+                                <span class="train-name">${train.name}</span>
+                                <span class="train-code">${train.zone}</span>
+                            </td>
+                            <td>${train.zone}</td>
+                            <td>${train.source}</td>
+                            <td>${train.destination}</td>
+                            <td>${train.stations.length}</td>
+                            <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                            <td>
+                                <button class="view-btn" onclick="viewTrain('${train.number}')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </td>
+                        `;
+                tbody.appendChild(tr);
+            });
+
+            updatePagination();
+            updateStats();
+        }
+
+        // ============================================================
+        //  UPDATE PAGINATION
+        // ============================================================
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredTrains.length / itemsPerPage) || 1;
+            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage <= 1;
+            document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+        }
+
+        // ============================================================
+        //  CHANGE PAGE
+        // ============================================================
+        function changePage(delta) {
+            const totalPages = Math.ceil(filteredTrains.length / itemsPerPage) || 1;
+            const newPage = currentPage + delta;
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderTable();
+                document.querySelector('.table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // ============================================================
+        //  UPDATE STATS
+        // ============================================================
+        function updateStats() {
+            document.getElementById('totalTrains').textContent = filteredTrains.length;
+            document.getElementById('totalStations').textContent = allStations.length;
+        }
+
+        // ============================================================
+        //  FILTER TRAINS
+        // ============================================================
+        function filterTrains() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            const zoneFilter = document.getElementById('zoneFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            filteredTrains = trains.filter(train => {
+                // Search filter
+                const matchesSearch = !searchQuery ||
+                    train.name.toLowerCase().includes(searchQuery) ||
+                    train.number.includes(searchQuery) ||
+                    train.source.toLowerCase().includes(searchQuery) ||
+                    train.destination.toLowerCase().includes(searchQuery) ||
+                    train.stations.some(s => s.toLowerCase().includes(searchQuery));
+
+                // Zone filter
+                const matchesZone = zoneFilter === 'all' || train.zone === zoneFilter;
+
+                // Status filter
+                const matchesStatus = statusFilter === 'all' || train.status === statusFilter;
+
+                return matchesSearch && matchesZone && matchesStatus;
+            });
+
+            currentPage = 1;
+            renderTable();
+
+            // Show toast if no results
+            if (filteredTrains.length === 0) {
+                showToast('🔍 No trains found matching your search.', 'info');
+            } else {
+                showToast(`✅ Found ${filteredTrains.length} trains.`, 'success');
+            }
+        }
+
+        // ============================================================
+        //  CLEAR FILTERS
+        // ============================================================
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('zoneFilter').value = 'all';
+            document.getElementById('statusFilter').value = 'all';
+            filteredTrains = [...trains];
+            currentPage = 1;
+            renderTable();
+            showToast('🔄 Filters cleared. Showing all trains.', 'info');
+        }
+
+        // ============================================================
+        //  VIEW TRAIN
+        // ============================================================
+        function viewTrain(trainNumber) {
+            const train = trains.find(t => t.number === trainNumber);
+            if (train) {
+                showToast(`🚂 ${train.number} - ${train.name}\n📍 ${train.source} → ${train.destination}\n🚉 ${train.stations.join(' → ')}`, 'info');
+            }
+        }
+
+        // ============================================================
+        //  TOAST NOTIFICATION
+        // ============================================================
+        let toastTimeout;
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const icon = toast.querySelector('i');
+
+            toastMessage.textContent = message;
+
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#2ecc71';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+                icon.style.color = '#e63946';
+            } else {
+                icon.className = 'fas fa-info-circle';
+                icon.style.color = '#3498db';
+            }
+
+            toast.classList.add('show');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function closeToast() {
+            document.getElementById('toast').classList.remove('show');
+            clearTimeout(toastTimeout);
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            filteredTrains = [...trains];
+            renderTable();
+            console.log(`🚂 Loaded ${trains.length} trains with ${allStations.length} stations across India.`);
+            console.log('📌 Use search and filters to explore the train list.');
+        });
+    </script>
+
+</body>
+</html>

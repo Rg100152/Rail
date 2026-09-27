@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Trains – RAIL</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+                   RESET & BASE
+                ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            position: relative;
+        }
+
+        /* ============================
+                   FULL PAGE BACKGROUND IMAGE
+                ============================ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -2;
+            /* 
+               ⬇️⬇️⬇️ REPLACE THIS URL WITH YOUR IMAGE ⬇️⬇️⬇️ 
+               You can use: 
+               - A direct image URL (e.g., https://example.com/image.jpg)
+               - Or a local path (e.g., assets/images/background.jpg)
+            */
+            background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.4) saturate(0.8);
+        }
+
+        /* Dark overlay for better readability */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============================
+                   TOP BAR
+                ============================ */
+        .top-bar {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .top-bar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .top-bar-left span:hover {
+            color: #fff;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+                   NAVBAR
+                ============================ */
+        .navbar {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+            animation: bounceTrain 3s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #adb5bd;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #2ecc71;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.15);
+        }
+
+        .nav-links .login-btn {
+            background: #2ecc71;
+            color: #0d0d1a !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .login-btn::after {
+            display: none;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+            color: #0d0d1a !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   SEARCH SECTION
+                ============================ */
+        .search-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 820px;
+            background: rgba(13, 13, 26, 0.75);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 36px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            animation: fadeUp 0.6s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .search-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .search-header h1 span {
+            color: #2ecc71;
+        }
+
+        .search-header p {
+            color: #adb5bd;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 6px;
+        }
+
+        .search-tab {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: #adb5bd;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            flex: 1;
+        }
+
+        .search-tab:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .search-tab.active {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .search-tab i {
+            margin-right: 8px;
+        }
+
+        .search-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .search-form .form-row .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .search-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .search-form .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #adb5bd;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-form .form-group label i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        .search-form .form-group input,
+        .search-form .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-form .form-group input:focus,
+        .search-form .form-group select:focus {
+            border-color: #2ecc71;
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .search-form .form-group input::placeholder {
+            color: #6c757d;
+        }
+
+        .search-form .form-group select {
+            appearance: none;
+            cursor: pointer;
+            color: #adb5bd;
+        }
+
+        .search-form .form-group select option {
+            color: #1a1a2e;
+            background: #fff;
+        }
+
+        .swap-btn-wrapper {
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            padding-bottom: 2px;
+        }
+
+        .swap-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #adb5bd;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .swap-btn:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+            border-color: #2ecc71;
+            transform: rotate(180deg);
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #0d0d1a;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.30);
+        }
+
+        .search-btn i {
+            margin-right: 10px;
+        }
+
+        /* ============================
+                   FOOTER
+                ============================ */
+        footer {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            color: #adb5bd;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            z-index: 10;
+        }
+
+        footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        footer .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        footer .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   RESPONSIVE
+                ============================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                gap: 4px;
+                background: rgba(13, 13, 26, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 12px;
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .search-container {
+                padding: 28px 20px;
+            }
+
+            .search-form .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .swap-btn-wrapper {
+                grid-column: 1 / -1;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .search-header h1 {
+                font-size: 26px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-container {
+                padding: 20px 16px;
+            }
+
+            .search-tabs {
+                flex-direction: column;
+            }
+
+            .search-tab {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="search.html" class="active"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="service.html"><i class="fas fa-concierge-bell"></i> SERVICES</a></li>
+                <li><a href="index.html#about"><i class="fas fa-info-circle"></i> ABOUT</a></li>
+                <li><a href="index.html#contact"><i class="fas fa-headset"></i> HELP</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== SEARCH SECTION ==================== -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-header">
+                <h1>Find Your <span>Train</span></h1>
+                <p>Search trains by route, name, or number</p>
+            </div>
+
+            <!-- Search Tabs -->
+            <div class="search-tabs">
+                <button class="search-tab active" onclick="switchTab('route', this)">
+                    <i class="fas fa-route"></i> By Route
+                </button>
+                <button class="search-tab" onclick="switchTab('name', this)">
+                    <i class="fas fa-train"></i> By Name/Number
+                </button>
+                <button class="search-tab" onclick="switchTab('pnr', this)">
+                    <i class="fas fa-ticket-alt"></i> By PNR
+                </button>
+            </div>
+
+            <!-- Search Form -->
+            <form class="search-form" id="searchForm" action="trains.html" method="GET">
+                <!-- Route Search (default) -->
+                <div id="routeSearch">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> From</label>
+                            <input type="text" id="fromStation" placeholder="Enter station name" required autocomplete="off" />
+                        </div>
+                        <div class="form-group swap-btn-wrapper">
+                            <button type="button" class="swap-btn" onclick="swapStations()">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> To</label>
+                            <input type="text" id="toStation" placeholder="Enter station name" required autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Date</label>
+                            <input type="date" id="journeyDate" required />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Passengers</label>
+                            <input type="number" id="passengerCount" value="1" min="1" max="10" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-chair"></i> Class</label>
+                            <select id="trainClass">
+                                <option value="all">All Classes</option>
+                                <option value="1A">1A - AC First</option>
+                                <option value="2A">2A - AC 2 Tier</option>
+                                <option value="3A">3A - AC 3 Tier</option>
+                                <option value="SL">SL - Sleeper</option>
+                                <option value="2S">2S - Second Seating</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- By Name/Number (hidden by default) -->
+                <div id="nameSearch" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-train"></i> Train Name or Number</label>
+                            <input type="text" placeholder="e.g. Rajdhani Express or 12345" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Date</label>
+                            <input type="date" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Passengers</label>
+                            <input type="number" value="1" min="1" max="10" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- By PNR (hidden by default) -->
+                <div id="pnrSearch" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label><i class="fas fa-ticket-alt"></i> PNR Number</label>
+                            <input type="text" placeholder="Enter 10-digit PNR number" maxlength="10" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> SEARCH TRAINS
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 RAIL. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  SWAP STATIONS
+        // ============================================================
+        function swapStations() {
+            const from = document.getElementById('fromStation');
+            const to = document.getElementById('toStation');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+
+            const btn = document.querySelector('.swap-btn');
+            btn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                btn.style.transform = 'rotate(0deg)';
+            }, 400);
+        }
+
+        // ============================================================
+        //  SEARCH TAB SWITCH
+        // ============================================================
+        function switchTab(tab, element) {
+            document.querySelectorAll('.search-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            document.getElementById('routeSearch').style.display = 'none';
+            document.getElementById('nameSearch').style.display = 'none';
+            document.getElementById('pnrSearch').style.display = 'none';
+
+            if (tab === 'route') {
+                document.getElementById('routeSearch').style.display = 'block';
+                document.getElementById('searchForm').action = 'trains.html';
+            } else if (tab === 'name') {
+                document.getElementById('nameSearch').style.display = 'block';
+                document.getElementById('searchForm').action = 'trains.html';
+            } else if (tab === 'pnr') {
+                document.getElementById('pnrSearch').style.display = 'block';
+                document.getElementById('searchForm').action = 'pnr-status.html';
+            }
+        }
+
+        // ============================================================
+        //  SET MIN DATE TO TODAY
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => {
+                input.setAttribute('min', today);
+                input.value = today;
+            });
+        });
+
+        // ============================================================
+        //  STATION SUGGESTIONS (Demo)
+        // ============================================================
+        const stations = ['Delhi', 'Mumbai', 'Kolkata', 'Chennai', 'Bangalore', 'Hyderabad',
+            'Ahmedabad', 'Pune', 'Jaipur', 'Lucknow', 'Patna', 'Bhopal',
+            'Nagpur', 'Surat', 'Varanasi', 'Amritsar', 'Agra', 'Chandigarh'
+        ];
+
+        // Add suggestions to fromStation and toStation
+        // (Same as index.html - keeping it clean)
+        console.log('🚂 RAIL – Search Page Loaded Successfully!');
+    </script>
+
+</body>
+</html>

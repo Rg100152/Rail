@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register – RAIL</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* ============================
+               RESET & BASE
+            ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ============================
+               MAIN CARD
+            ============================ */
+        .register-container {
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+            padding: 40px 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* subtle top accent */
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2ecc71, #27ae60, #2ecc71);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 200% 0%;
+            }
+        }
+
+        /* ============================
+               LOGO / HEADER
+            ============================ */
+        .register-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .register-header .logo-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .register-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #1a1a2e;
+            margin-bottom: 2px;
+        }
+
+        .register-header h1 span {
+            color: #2ecc71;
+        }
+
+        .register-header .sub {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6c757d;
+            letter-spacing: 0.3px;
+        }
+
+        .register-header .sub i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        /* ============================
+               BENEFITS BADGE
+            ============================ */
+        .benefits-badge {
+            background: #f8f9fa;
+            border-radius: 60px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 28px;
+            border: 1px solid #e9ecef;
+            flex-wrap: wrap;
+        }
+
+        .benefits-badge .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .benefits-badge .badge-item i {
+            color: #2ecc71;
+            font-size: 14px;
+        }
+
+        .benefits-badge .badge-divider {
+            width: 1px;
+            height: 24px;
+            background: #dee2e6;
+        }
+
+        .benefits-badge .free-tag {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================
+               FORM
+            ============================ */
+        .register-form {
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 6px;
+        }
+
+        .form-group label i {
+            color: #2ecc71;
+            margin-right: 6px;
+            width: 18px;
+        }
+
+        .form-group label .required {
+            color: #e63946;
+            margin-left: 2px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            background: #fafbfc;
+            transition: all 0.25s ease;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            appearance: none;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+            border-color: #2ecc71;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
+        }
+
+        .input-wrapper select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 44px;
+        }
+
+        .input-wrapper .toggle-pass {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .input-wrapper .toggle-pass:hover {
+            color: #2ecc71;
+        }
+
+        .input-wrapper .password-strength {
+            position: absolute;
+            right: 48px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 40px;
+            display: none;
+        }
+
+        .input-wrapper .password-strength.weak {
+            display: block;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .input-wrapper .password-strength.medium {
+            display: block;
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .input-wrapper .password-strength.strong {
+            display: block;
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        /* ============================
+               TERMS CHECKBOX
+            ============================ */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 6px 0 20px 0;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 14px;
+            border: 1px solid #e9ecef;
+        }
+
+        .terms-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 1px;
+            accent-color: #2ecc71;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .terms-group label {
+            font-size: 13px;
+            color: #495057;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .terms-group label a {
+            color: #2ecc71;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .terms-group label a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================
+               BUTTONS
+            ============================ */
+        .btn-register {
+            width: 100%;
+            padding: 16px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-register:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+        }
+
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
+        .btn-register .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn-register.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-register.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================
+               FORM ACTIONS
+            ============================ */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .form-actions .login-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .form-actions .login-link i {
+            color: #2ecc71;
+            font-size: 14px;
+        }
+
+        .form-actions .login-link:hover {
+            color: #2ecc71;
+        }
+
+        .form-actions .help-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .form-actions .help-link:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+               TOAST MESSAGE
+            ============================ */
+        .toast-message {
+            display: none;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+            text-align: center;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .toast-message.show {
+            display: block;
+        }
+
+        .toast-message i {
+            margin-right: 8px;
+        }
+
+        .toast-message.success i {
+            color: #2ecc71;
+        }
+
+        .toast-message.error i {
+            color: #e63946;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+               RESPONSIVE
+            ============================ */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 28px 20px 24px;
+                border-radius: 20px;
+            }
+
+            .register-header h1 {
+                font-size: 24px;
+            }
+
+            .benefits-badge {
+                padding: 8px 12px;
+                gap: 10px;
+            }
+
+            .benefits-badge .badge-item {
+                font-size: 11px;
+            }
+
+            .benefits-badge .badge-divider {
+                display: none;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .terms-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ============================
+               PASSWORD HINT
+            ============================ */
+        .password-hint {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .password-hint i {
+            color: #2ecc71;
+            font-size: 12px;
+        }
+
+        /* ============================
+               NAME ROW (First + Last)
+            ============================ */
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .name-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+
+        <!-- ====== HEADER ====== -->
+        <div class="register-header">
+            <span class="logo-icon">🚂</span>
+            <h1>Indian <span>Railway</span></h1>
+            <div class="sub"><i class="fas fa-chevron-circle-right"></i> Create your account</div>
+        </div>
+
+        <!-- ====== BENEFITS BADGE ====== -->
+        <div class="benefits-badge">
+            <div class="badge-item">
+                <i class="fas fa-ticket-alt"></i> Easy Booking
+            </div>
+            <div class="badge-divider"></div>
+            <div class="badge-item">
+                <i class="fas fa-gift"></i> Loyalty Rewards
+            </div>
+            <div class="badge-divider"></div>
+            <div class="badge-item">
+                <i class="fas fa-shield-alt"></i> Secure
+            </div>
+            <div class="badge-divider"></div>
+            <span class="free-tag"><i class="fas fa-star"></i> FREE</span>
+        </div>
+
+        <!-- ====== REGISTER FORM ====== -->
+        <form class="register-form" id="registerForm" novalidate>
+
+            <!-- Full Name Row -->
+            <div class="name-row">
+                <div class="form-group">
+                    <label for="firstName"><i class="fas fa-user"></i> First Name <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="firstName" placeholder="First name" required autocomplete="given-name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName"><i class="fas fa-user"></i> Last Name <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <input type="text" id="lastName" placeholder="Last name" required autocomplete="family-name" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="Enter your email" required autocomplete="email" />
+                </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="form-group">
+                <label for="mobile"><i class="fas fa-phone"></i> Mobile Number <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="tel" id="mobile" placeholder="Enter 10-digit mobile number" required autocomplete="tel" maxlength="10" />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Min 8 characters" required autocomplete="new-password" />
+                    <i class="fas fa-eye toggle-pass" id="togglePass" onclick="togglePasswordVisibility()"></i>
+                    <span class="password-strength" id="passwordStrength"></span>
+                </div>
+                <div class="password-hint">
+                    <i class="fas fa-info-circle"></i>
+                    Use 8+ chars with letters, numbers & symbols
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword"><i class="fas fa-check-circle"></i> Confirm Password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirmPassword" placeholder="Re-enter password" required autocomplete="new-password" />
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender"><i class="fas fa-venus-mars"></i> Gender <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <select id="gender" required>
+                        <option value="">Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="terms-group">
+                <input type="checkbox" id="terms" required />
+                <label for="terms">
+                    I agree to the <a href="#">Terms & Conditions</a> and
+                    <a href="#">Privacy Policy</a>. I understand that my data
+                    will be handled securely.
+                </label>
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit" class="btn-register" id="registerBtn">
+                <span class="btn-text"><i class="fas fa-user-plus"></i> Create Account</span>
+                <span class="spinner"></span>
+            </button>
+
+            <!-- Login Link -->
+            <div class="form-actions">
+                <a href="login.html" class="login-link">
+                    <i class="fas fa-sign-in-alt"></i> Already have an account? Login
+                </a>
+                <a href="#" class="help-link" onclick="alert('📞 Call 139 for help.')">
+                    <i class="fas fa-headset"></i> Need help?
+                </a>
+            </div>
+
+            <!-- Toast Message -->
+            <div class="toast-message" id="toastMessage">
+                <i class="fas fa-check-circle"></i> <span id="toastText">Registration successful!</span>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ============================
+    JAVASCRIPT
+    ============================ -->
+    <script>
+        /**
+         * Toggle password visibility
+         */
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePass');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        /**
+         * Password strength checker
+         */
+        function checkPasswordStrength(password) {
+            const strengthEl = document.getElementById('passwordStrength');
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthEl.className = 'password-strength';
+
+            if (password.length === 0) {
+                strengthEl.className = 'password-strength';
+                strengthEl.style.display = 'none';
+                return;
+            }
+
+            strengthEl.style.display = 'block';
+
+            if (strength <= 2) {
+                strengthEl.className = 'password-strength weak';
+                strengthEl.textContent = 'Weak';
+            } else if (strength <= 3) {
+                strengthEl.className = 'password-strength medium';
+                strengthEl.textContent = 'Medium';
+            } else {
+                strengthEl.className = 'password-strength strong';
+                strengthEl.textContent = 'Strong';
+            }
+        }
+
+        document.getElementById('password').addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+        });
+
+        /**
+         * Show toast message
+         */
+        function showToast(message, type) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+
+            toast.className = 'toast-message show ' + type;
+            toastText.textContent = message;
+
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        /**
+         * Handle form submission
+         */
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const gender = document.getElementById('gender').value;
+            const terms = document.getElementById('terms').checked;
+
+            const registerBtn = document.getElementById('registerBtn');
+
+            // --- Validation ---
+            if (!firstName) {
+                showToast('Please enter your first name.', 'error');
+                document.getElementById('firstName').focus();
+                return;
+            }
+
+            if (!lastName) {
+                showToast('Please enter your last name.', 'error');
+                document.getElementById('lastName').focus();
+                return;
+            }
+
+            if (!email) {
+                showToast('Please enter your email address.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('Please enter a valid email address.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            if (!mobile) {
+                showToast('Please enter your mobile number.', 'error');
+                document.getElementById('mobile').focus();
+                return;
+            }
+
+            if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
+                showToast('Please enter a valid 10-digit mobile number.', 'error');
+                document.getElementById('mobile').focus();
+                return;
+            }
+
+            if (!password) {
+                showToast('Please create a password.', 'error');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            if (password.length < 8) {
+                showToast('Password must be at least 8 characters.', 'error');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match. Please try again.', 'error');
+                document.getElementById('confirmPassword').focus();
+                return;
+            }
+
+            if (!gender) {
+                showToast('Please select your gender.', 'error');
+                document.getElementById('gender').focus();
+                return;
+            }
+
+            if (!terms) {
+                showToast('Please accept the Terms & Conditions to continue.', 'error');
+                document.getElementById('terms').focus();
+                return;
+            }
+
+            // --- Simulate registration ---
+            registerBtn.classList.add('loading');
+            registerBtn.disabled = true;
+
+            setTimeout(() => {
+                registerBtn.classList.remove('loading');
+                registerBtn.disabled = false;
+
+                showToast('✅ Registration successful! Welcome, ' + firstName + '!', 'success');
+
+                // Redirect to login after 1.5s
+                setTimeout(() => {
+                    window.location.href = 'login.html?registered=true';
+                }, 1500);
+            }, 1500);
+        });
+
+        /**
+         * Clear toast on input focus
+         */
+        document.querySelectorAll('#registerForm input, #registerForm select').forEach(input => {
+            input.addEventListener('focus', function() {
+                const toast = document.getElementById('toastMessage');
+                toast.classList.remove('show');
+            });
+        });
+
+        /**
+         * Auto-focus first field on load
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('firstName').focus();
+        });
+
+        console.log('🚂 RAIL Register page loaded successfully.');
+    </script>
+
+</body>
+</html>

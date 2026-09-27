@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Recovery – RAIL</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+                   RESET & BASE
+                ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 40%, #0d1f3c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ============================
+                   MAIN CARD
+                ============================ */
+        .recovery-container {
+            width: 100%;
+            max-width: 460px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 36px 36px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            animation: fadeUp 0.6s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+                   HEADER
+                ============================ */
+        .recovery-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .recovery-header .logo-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .recovery-header .brand {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .recovery-header .brand span {
+            color: #2ecc71;
+        }
+
+        .recovery-header .sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        /* ============================
+                   ICON
+                ============================ */
+        .recovery-icon {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .recovery-icon .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #2ecc71;
+            border: 2px solid rgba(46, 204, 113, 0.15);
+        }
+
+        /* ============================
+                   TITLE
+                ============================ */
+        .recovery-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .recovery-title h2 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .recovery-title p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        /* ============================
+                   FORM
+                ============================ */
+        .recovery-form .form-group {
+            margin-bottom: 18px;
+        }
+
+        .recovery-form .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 6px;
+        }
+
+        .recovery-form .form-group label i {
+            color: #2ecc71;
+            margin-right: 6px;
+        }
+
+        .recovery-form .form-group .input-wrapper {
+            position: relative;
+        }
+
+        .recovery-form .form-group .input-wrapper input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .recovery-form .form-group .input-wrapper input:focus {
+            border-color: #2ecc71;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .recovery-form .form-group .input-wrapper input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .recovery-form .form-group .input-wrapper .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+        }
+
+        /* ============================
+                   OPTIONS LIST
+                ============================ */
+        .recovery-options {
+            margin: 20px 0 24px;
+        }
+
+        .recovery-options .option-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .recovery-options .option-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .recovery-options .option-item .option-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+        }
+
+        .recovery-options .option-item .option-icon.active {
+            background: rgba(46, 204, 113, 0.12);
+            color: #2ecc71;
+        }
+
+        .recovery-options .option-item .option-icon.danger {
+            background: rgba(230, 57, 70, 0.12);
+            color: #e63946;
+        }
+
+        .recovery-options .option-item .option-text {
+            flex: 1;
+        }
+
+        .recovery-options .option-item .option-text .title {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .recovery-options .option-item .option-text .desc {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 12px;
+            margin-top: 1px;
+        }
+
+        .recovery-options .option-item .option-check {
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+        }
+
+        .recovery-options .option-item .option-check.checked {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   BUTTONS
+                ============================ */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #0d0d1a;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.25);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #0d0d1a;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn-submit.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-submit.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================
+                   FORM ACTIONS
+                ============================ */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .form-actions .back-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .form-actions .back-link:hover {
+            color: #2ecc71;
+        }
+
+        .form-actions .back-link i {
+            font-size: 14px;
+        }
+
+        .form-actions .help-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .form-actions .help-link:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   TOAST MESSAGE
+                ============================ */
+        .toast-message {
+            display: none;
+            background: rgba(13, 13, 26, 0.9);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+            text-align: center;
+            animation: fadeUp 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .toast-message.show {
+            display: block;
+        }
+
+        .toast-message i {
+            margin-right: 8px;
+        }
+
+        .toast-message.success i {
+            color: #2ecc71;
+        }
+
+        .toast-message.error i {
+            color: #e63946;
+        }
+
+        .toast-message.info i {
+            color: #3498db;
+        }
+
+        /* ============================
+                   RESPONSIVE
+                ============================ */
+        @media (max-width: 480px) {
+            .recovery-container {
+                padding: 28px 20px 24px;
+                border-radius: 20px;
+            }
+
+            .recovery-header .brand {
+                font-size: 24px;
+            }
+
+            .recovery-title h2 {
+                font-size: 20px;
+            }
+
+            .recovery-options .option-item {
+                padding: 12px 14px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .recovery-icon .icon-circle {
+                width: 64px;
+                height: 64px;
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="recovery-container">
+
+        <!-- ====== HEADER ====== -->
+        <div class="recovery-header">
+            <span class="logo-icon">🚂</span>
+            <div class="brand">RAIL</div>
+            <div class="sub">Indian Railways</div>
+        </div>
+
+        <!-- ====== ICON ====== -->
+        <div class="recovery-icon">
+            <div class="icon-circle">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+
+        <!-- ====== TITLE ====== -->
+        <div class="recovery-title">
+            <h2>Forgot Your Password?</h2>
+            <p>Enter your email address to reset your password and recover your account.</p>
+        </div>
+
+        <!-- ====== FORM ====== -->
+        <form class="recovery-form" id="recoveryForm" novalidate>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="Enter your registered email" required autocomplete="email" />
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="recovery-options">
+                <div class="option-item" id="optionChangeEmail" onclick="selectOption('changeEmail')">
+                    <div class="option-icon active">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="option-text">
+                        <div class="title">Change Email Address</div>
+                        <div class="desc">Update your registered email</div>
+                    </div>
+                    <div class="option-check checked" id="checkChangeEmail">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+
+                <div class="option-item" id="optionResetPassword" onclick="selectOption('resetPassword')">
+                    <div class="option-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="option-text">
+                        <div class="title">Reset Password</div>
+                        <div class="desc">Get password reset link</div>
+                    </div>
+                    <div class="option-check" id="checkResetPassword">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+
+                <div class="option-item" id="optionDeleteAccount" onclick="selectOption('deleteAccount')">
+                    <div class="option-icon danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <div class="option-text">
+                        <div class="title" style="color:#e63946;">Delete Account</div>
+                        <div class="desc">Permanently delete your account</div>
+                    </div>
+                    <div class="option-check" id="checkDeleteAccount">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="btn-text"><i class="fas fa-arrow-right"></i> Proceed</span>
+                <span class="spinner"></span>
+            </button>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <a href="login.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Login
+                </a>
+                <a href="#" class="help-link" onclick="alert('📞 Call 139 for help.')">
+                    <i class="fas fa-headset"></i> Need help?
+                </a>
+            </div>
+
+            <!-- Toast Message -->
+            <div class="toast-message" id="toastMessage">
+                <i class="fas fa-check-circle"></i> <span id="toastText">Action completed!</span>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ============================
+    JAVASCRIPT
+    ============================ -->
+    <script>
+        // ============================================================
+        //  SELECT OPTION
+        // ============================================================
+        let selectedOption = 'resetPassword';
+
+        function selectOption(option) {
+            selectedOption = option;
+
+            // Reset all
+            document.querySelectorAll('.option-item').forEach(item => {
+                item.style.borderColor = 'rgba(255,255,255,0.04)';
+                item.querySelector('.option-icon').classList.remove('active');
+                item.querySelector('.option-icon').classList.remove('danger');
+            });
+
+            document.querySelectorAll('.option-check').forEach(check => {
+                check.className = 'option-check';
+                check.innerHTML = '<i class="fas fa-circle"></i>';
+            });
+
+            // Activate selected
+            const selectedEl = document.getElementById('option' + option.charAt(0).toUpperCase() + option.slice(1));
+            const checkEl = document.getElementById('check' + option.charAt(0).toUpperCase() + option.slice(1));
+            const iconEl = selectedEl.querySelector('.option-icon');
+
+            selectedEl.style.borderColor = 'rgba(46,204,113,0.2)';
+            iconEl.classList.add('active');
+
+            if (option === 'deleteAccount') {
+                iconEl.classList.add('danger');
+            }
+
+            checkEl.className = 'option-check checked';
+            checkEl.innerHTML = '<i class="fas fa-check-circle"></i>';
+
+            // Update button text
+            const btn = document.querySelector('.btn-submit .btn-text');
+            if (option === 'changeEmail') {
+                btn.innerHTML = '<i class="fas fa-envelope"></i> Change Email';
+            } else if (option === 'resetPassword') {
+                btn.innerHTML = '<i class="fas fa-key"></i> Reset Password';
+            } else if (option === 'deleteAccount') {
+                btn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Account';
+            }
+        }
+
+        // ============================================================
+        //  SHOW TOAST
+        // ============================================================
+        function showToast(message, type) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+
+            toast.className = 'toast-message show ' + type;
+            toastText.textContent = message;
+
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4500);
+        }
+
+        // ============================================================
+        //  HANDLE FORM SUBMISSION
+        // ============================================================
+        document.getElementById('recoveryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Validate email
+            if (!email) {
+                showToast('Please enter your email address.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('Please enter a valid email address.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            // Show loading
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+
+                let message = '';
+                let type = 'success';
+
+                if (selectedOption === 'changeEmail') {
+                    message = '📧 A verification link has been sent to your new email address.';
+                    type = 'info';
+                } else if (selectedOption === 'resetPassword') {
+                    message = '🔑 Password reset link sent to ' + email + '. Check your inbox.';
+                    type = 'success';
+                } else if (selectedOption === 'deleteAccount') {
+                    if (confirm('⚠️ Are you sure you want to permanently delete your account? This action cannot be undone!')) {
+                        message = '🗑️ Account deletion request submitted. You will receive a confirmation email.';
+                        type = 'info';
+                    } else {
+                        message = '❌ Account deletion cancelled.';
+                        type = 'error';
+                        showToast(message, type);
+                        return;
+                    }
+                }
+
+                showToast(message, type);
+
+                // If reset password, redirect after delay
+                if (selectedOption === 'resetPassword') {
+                    setTimeout(() => {
+                        window.location.href = 'login.html?recovered=true';
+                    }, 2500);
+                }
+
+            }, 1800);
+        });
+
+        // ============================================================
+        //  CLEAR TOAST ON INPUT
+        // ============================================================
+        document.getElementById('email').addEventListener('focus', function() {
+            document.getElementById('toastMessage').classList.remove('show');
+        });
+
+        // ============================================================
+        //  AUTO-FOCUS ON LOAD
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('email').focus();
+            // Default select reset password
+            selectOption('resetPassword');
+        });
+
+        // ============================================================
+        //  LOG
+        // ============================================================
+        console.log('🔐 RAIL – Account Recovery Page Loaded Successfully!');
+        console.log('📌 Options: Change Email | Reset Password | Delete Account');
+    </script>
+
+</body>
+</html>

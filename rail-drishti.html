@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rail Dishti – RAIL</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+                   ROOT VARIABLES
+                ============================ */
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-glow: #ff6b35;
+            --primary-green: #2ecc71;
+            --primary-yellow: #f1c40f;
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #1e272e;
+            --text-muted: #485460;
+            --bg-shimmer: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 75%);
+        }
+
+        /* ============================
+                   RESET & BASE
+                ============================ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 40%, #0d1f3c 100%);
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* ============================
+                   TOP BAR
+                ============================ */
+        .top-bar {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .top-bar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .top-bar-left span:hover {
+            color: #fff;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+                   NAVBAR
+                ============================ */
+        .navbar {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            position: sticky;
+            top: 44px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+            animation: bounceTrain 3s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #adb5bd;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #2ecc71;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.12);
+        }
+
+        .nav-links .login-btn {
+            background: #2ecc71;
+            color: #0d0d1a !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .login-btn::after {
+            display: none;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+            color: #0d0d1a !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   PAGE HEADER
+                ============================ */
+        .page-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header h1 span {
+            color: #2ecc71;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+
+        /* ============================
+                   TRACKING SEARCH
+                ============================ */
+        .tracking-section {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 36px;
+            margin-bottom: 30px;
+        }
+
+        .tracking-section .tracking-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .tracking-section .tracking-tab {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tracking-section .tracking-tab:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .tracking-section .tracking-tab.active {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .tracking-section .tracking-tab i {
+            margin-right: 8px;
+        }
+
+        .tracking-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .tracking-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tracking-form .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tracking-form .form-group label i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        .tracking-form .form-group input,
+        .tracking-form .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tracking-form .form-group input:focus,
+        .tracking-form .form-group select:focus {
+            border-color: #2ecc71;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .tracking-form .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tracking-form .form-group select {
+            appearance: none;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tracking-form .form-group select option {
+            color: #1a1a2e;
+            background: #fff;
+        }
+
+        .tracking-form .track-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #0d0d1a;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .tracking-form .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.25);
+        }
+
+        .tracking-form .track-btn i {
+            margin-right: 8px;
+        }
+
+        /* ============================
+                   TRAIN STATUS CARD
+                ============================ */
+        .train-status-card {
+            display: none;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 36px;
+            margin-bottom: 30px;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .train-status-card.show {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .train-status-card .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .train-status-card .status-header .train-info h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .train-status-card .status-header .train-info .train-meta {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .train-status-card .status-header .train-info .train-meta i {
+            margin: 0 6px;
+        }
+
+        .train-status-card .status-header .status-badge {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .train-status-card .status-header .status-badge.on-time {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .train-status-card .status-header .status-badge.delayed {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f1c40f;
+        }
+
+        .train-status-card .status-header .status-badge.arrived {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        /* ===== LIVE TRACKING MAP ===== */
+        .tracking-map {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tracking-map .map-train-icon {
+            font-size: 48px;
+            animation: moveTrain 8s infinite linear;
+        }
+
+        @keyframes moveTrain {
+            0% {
+                transform: translateX(-60px) scaleX(1);
+            }
+            50% {
+                transform: translateX(60px) scaleX(1);
+            }
+            51% {
+                transform: translateX(60px) scaleX(-1);
+            }
+            100% {
+                transform: translateX(-60px) scaleX(-1);
+            }
+        }
+
+        .tracking-map .map-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .tracking-map .map-dots {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .tracking-map .map-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ecc71;
+            animation: pulseDot 2s infinite;
+        }
+
+        .tracking-map .map-dots .dot:nth-child(2) {
+            animation-delay: 0.4s;
+            background: #f1c40f;
+        }
+        .tracking-map .map-dots .dot:nth-child(3) {
+            animation-delay: 0.8s;
+            background: #3498db;
+        }
+        .tracking-map .map-dots .dot:nth-child(4) {
+            animation-delay: 1.2s;
+            background: #e74c3c;
+        }
+        .tracking-map .map-dots .dot:nth-child(5) {
+            animation-delay: 1.6s;
+            background: #9b59b6;
+        }
+
+        @keyframes pulseDot {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.8);
+                opacity: 0.3;
+            }
+        }
+
+        /* ===== STATION STOPS ===== */
+        .station-stops {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 16px;
+        }
+
+        .station-stop {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .station-stop:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .station-stop.current {
+            border-left-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.06);
+        }
+
+        .station-stop .stop-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            flex-shrink: 0;
+        }
+
+        .station-stop.current .stop-dot {
+            background: #2ecc71;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .station-stop .stop-info {
+            flex: 1;
+        }
+
+        .station-stop .stop-info .station-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .station-stop .stop-info .station-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .station-stop .stop-detail {
+            text-align: right;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .station-stop .stop-detail .status-tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .station-stop .stop-detail .status-tag.departed {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .station-stop .stop-detail .status-tag.arrived {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .station-stop .stop-detail .status-tag.upcoming {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .station-stop .stop-detail .status-tag.delayed {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f1c40f;
+        }
+
+        /* ============================
+                   FEATURES / SERVICES
+                ============================ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 24px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .feature-card i {
+            font-size: 32px;
+            color: #2ecc71;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        /* ============================
+                   FOOTER
+                ============================ */
+        footer {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px 0 20px;
+            color: #adb5bd;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 30px;
+        }
+
+        footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        footer .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        footer .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   RESPONSIVE
+                ============================ */
+        @media (max-width: 1024px) {
+            .tracking-form .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                gap: 4px;
+                background: rgba(13, 13, 26, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 12px;
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .tracking-section {
+                padding: 24px 20px;
+            }
+
+            .tracking-form .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-form .track-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .train-status-card {
+                padding: 24px 20px;
+            }
+
+            .train-status-card .status-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .station-stop {
+                flex-wrap: wrap;
+            }
+
+            .station-stop .stop-detail {
+                text-align: left;
+                margin-left: 28px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .tracking-map {
+                height: 150px;
+            }
+
+            .tracking-map .map-train-icon {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="search.html"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="rail-drishti.html" class="active"><i class="fas fa-eye"></i> RAIL DISHTI</a></li>
+                <li><a href="service.html"><i class="fas fa-concierge-bell"></i> SERVICES</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== PAGE HEADER ==================== -->
+    <div class="container">
+        <div class="page-header">
+            <h1>🚂 <span>Rail Dishti</span></h1>
+            <p>Real-time train tracking & live status updates</p>
+        </div>
+
+        <!-- ==================== TRACKING SECTION ==================== -->
+        <div class="tracking-section">
+            <div class="tracking-tabs">
+                <button class="tracking-tab active" onclick="switchTrackTab('train', this)">
+                    <i class="fas fa-train"></i> By Train
+                </button>
+                <button class="tracking-tab" onclick="switchTrackTab('station', this)">
+                    <i class="fas fa-map-marker-alt"></i> By Station
+                </button>
+                <button class="tracking-tab" onclick="switchTrackTab('pnr', this)">
+                    <i class="fas fa-ticket-alt"></i> By PNR
+                </button>
+            </div>
+
+            <form class="tracking-form" id="trackingForm" onsubmit="trackTrain(event)">
+                <div class="form-row">
+                    <div class="form-group" id="trainInputGroup">
+                        <label><i class="fas fa-train"></i> Train Number or Name</label>
+                        <input type="text" id="trainInput" placeholder="e.g. 12345 or Rajdhani Express" required />
+                    </div>
+                    <div class="form-group" id="stationInputGroup" style="display:none;">
+                        <label><i class="fas fa-map-marker-alt"></i> Station Name</label>
+                        <input type="text" id="stationInput" placeholder="e.g. Delhi, Mumbai" />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Journey Date</label>
+                        <input type="date" id="trackDate" required />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="track-btn">
+                            <i class="fas fa-eye"></i> Track Now
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- ==================== TRAIN STATUS CARD ==================== -->
+        <div class="train-status-card" id="trainStatusCard">
+            <div class="status-header">
+                <div class="train-info">
+                    <h2 id="trainNameDisplay">12345 - Rajdhani Express</h2>
+                    <div class="train-meta">
+                        <i class="fas fa-route"></i> <span id="routeDisplay">Delhi → Mumbai</span>
+                        <i class="fas fa-clock"></i> <span id="dateDisplay">25 Aug 2026</span>
+                    </div>
+                </div>
+                <span class="status-badge on-time" id="statusBadge">🟢 On Time</span>
+            </div>
+
+            <!-- Live Tracking Map -->
+            <div class="tracking-map">
+                <div class="map-train-icon">🚂</div>
+                <div class="map-text">Live Train Movement Simulation</div>
+                <div class="map-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+
+            <!-- Station Stops -->
+            <div class="station-stops" id="stationStops">
+                <!-- Rendered by JavaScript -->
+            </div>
+        </div>
+
+        <!-- ==================== FEATURES ==================== -->
+        <div class="features-grid">
+            <div class="feature-card" onclick="alert('🚂 Live train tracking with real-time updates')">
+                <i class="fas fa-satellite"></i>
+                <h4>Live Tracking</h4>
+                <p>Real-time train location</p>
+            </div>
+            <div class="feature-card" onclick="alert('⏱️ Accurate arrival & departure times')">
+                <i class="fas fa-clock"></i>
+                <h4>Accurate Timings</h4>
+                <p>Arrival & departure updates</p>
+            </div>
+            <div class="feature-card" onclick="alert('📢 Instant delay notifications')">
+                <i class="fas fa-bell"></i>
+                <h4>Delay Alerts</h4>
+                <p>Get instant notifications</p>
+            </div>
+            <div class="feature-card" onclick="alert('🗺️ Interactive route map')">
+                <i class="fas fa-map"></i>
+                <h4>Route Map</h4>
+                <p>Interactive journey map</p>
+            </div>
+            <div class="feature-card" onclick="alert('📱 Share train status with friends')">
+                <i class="fas fa-share-alt"></i>
+                <h4>Share Status</h4>
+                <p>Share with family & friends</p>
+            </div>
+            <div class="feature-card" onclick="alert('📊 Historical train data')">
+                <i class="fas fa-chart-bar"></i>
+                <h4>Historical Data</h4>
+                <p>Past train performance</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 RAIL Dishti. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  TRACKING TAB SWITCH
+        // ============================================================
+        function switchTrackTab(tab, element) {
+            document.querySelectorAll('.tracking-tab').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            const trainGroup = document.getElementById('trainInputGroup');
+            const stationGroup = document.getElementById('stationInputGroup');
+
+            if (tab === 'train') {
+                trainGroup.style.display = 'block';
+                stationGroup.style.display = 'none';
+                document.getElementById('trainInput').required = true;
+                document.getElementById('stationInput').required = false;
+            } else if (tab === 'station') {
+                trainGroup.style.display = 'none';
+                stationGroup.style.display = 'block';
+                document.getElementById('trainInput').required = false;
+                document.getElementById('stationInput').required = true;
+            } else {
+                trainGroup.style.display = 'block';
+                stationGroup.style.display = 'none';
+                document.getElementById('trainInput').placeholder = 'Enter 10-digit PNR number';
+                document.getElementById('trainInput').required = true;
+                document.getElementById('stationInput').required = false;
+            }
+        }
+
+        // ============================================================
+        //  SET DATE
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('trackDate').value = today;
+            document.getElementById('trackDate').setAttribute('min', today);
+        });
+
+        // ============================================================
+        //  STATION DATA
+        // ============================================================
+        const stations = [
+            { name: 'Delhi (NDLS)', time: '06:30 AM', status: 'departed' },
+            { name: 'Kanpur (CNB)', time: '10:15 AM', status: 'departed' },
+            { name: 'Allahabad (ALD)', time: '12:30 PM', status: 'arrived' },
+            { name: 'Varanasi (BSB)', time: '02:45 PM', status: 'upcoming' },
+            { name: 'Patna (PNBE)', time: '05:00 PM', status: 'upcoming' },
+            { name: 'Kolkata (HWH)', time: '09:30 PM', status: 'upcoming' },
+        ];
+
+        // ============================================================
+        //  TRACK TRAIN
+        // ============================================================
+        function trackTrain(event) {
+            event.preventDefault();
+
+            const trainInput = document.getElementById('trainInput').value.trim();
+            const stationInput = document.getElementById('stationInput').value.trim();
+            const date = document.getElementById('trackDate').value;
+
+            // Determine which tab is active
+            const activeTab = document.querySelector('.tracking-tab.active');
+            const tabType = activeTab ? activeTab.textContent.trim().toLowerCase() : 'train';
+
+            let searchQuery = trainInput || stationInput;
+
+            if (!searchQuery) {
+                alert('Please enter train number, name, station, or PNR to track.');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.querySelector('.track-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Tracking...';
+            btn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Update train status card
+                const card = document.getElementById('trainStatusCard');
+                card.classList.add('show');
+
+                // Update train info
+                const trainName = document.getElementById('trainNameDisplay');
+                const routeDisplay = document.getElementById('routeDisplay');
+                const dateDisplay = document.getElementById('dateDisplay');
+                const statusBadge = document.getElementById('statusBadge');
+
+                // Random statuses for demo
+                const statuses = [
+                    { text: '🟢 On Time', class: 'on-time' },
+                    { text: '🟡 Delayed by 15 min', class: 'delayed' },
+                    { text: '🔵 Arrived', class: 'arrived' }
+                ];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+                // Generate random train name
+                const trainNames = [
+                    '12345 - Rajdhani Express',
+                    '12951 - Mumbai Rajdhani',
+                    '12002 - Bhopal Shatabdi',
+                    '12259 - Sealdah Duronto',
+                    '12905 - Howrah Rajdhani'
+                ];
+                const randomTrain = trainNames[Math.floor(Math.random() * trainNames.length)];
+
+                const routes = [
+                    'Delhi → Mumbai',
+                    'Mumbai → Delhi',
+                    'Delhi → Kolkata',
+                    'Chennai → Bangalore',
+                    'Howrah → New Delhi'
+                ];
+                const randomRoute = routes[Math.floor(Math.random() * routes.length)];
+
+                trainName.textContent = randomTrain;
+                routeDisplay.textContent = randomRoute;
+                dateDisplay.textContent = date || new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                statusBadge.textContent = randomStatus.text;
+                statusBadge.className = 'status-badge ' + randomStatus.class;
+
+                // Render station stops
+                renderStations(randomStatus.class);
+
+                // Scroll to card
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Reset button
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                // Notification
+                showNotification(`✅ Tracking ${searchQuery} – Status updated!`);
+
+            }, 1500);
+        }
+
+        // ============================================================
+        //  RENDER STATIONS
+        // ============================================================
+        function renderStations(statusClass) {
+            const container = document.getElementById('stationStops');
+            container.innerHTML = '';
+
+            // Determine current station based on status
+            let currentIndex = 2; // Default to Allahabad
+            if (statusClass === 'on-time') currentIndex = 2;
+            else if (statusClass === 'delayed') currentIndex = 1;
+            else if (statusClass === 'arrived') currentIndex = 5;
+
+            stations.forEach((station, index) => {
+                const div = document.createElement('div');
+                div.className = 'station-stop';
+                if (index === currentIndex) {
+                    div.classList.add('current');
+                }
+
+                let statusText = station.status;
+                let statusClassTag = '';
+
+                if (index < currentIndex) {
+                    statusText = 'Departed';
+                    statusClassTag = 'departed';
+                } else if (index === currentIndex) {
+                    statusText = '⏳ Current Station';
+                    statusClassTag = 'arrived';
+                } else {
+                    statusText = 'Upcoming';
+                    statusClassTag = 'upcoming';
+                }
+
+                // If train is delayed, adjust
+                if (statusClass === 'delayed' && index === currentIndex + 1) {
+                    statusText = 'Delayed (15 min)';
+                    statusClassTag = 'delayed';
+                }
+
+                div.innerHTML = `
+                            <span class="stop-dot"></span>
+                            <div class="stop-info">
+                                <div class="station-name">${station.name}</div>
+                                <div class="station-time">${station.time}</div>
+                            </div>
+                            <div class="stop-detail">
+                                <span class="status-tag ${statusClassTag}">${statusText}</span>
+                            </div>
+                        `;
+
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        //  NOTIFICATION
+        // ============================================================
+        function showNotification(message) {
+            const existing = document.getElementById('drishtiNotification');
+            if (existing) existing.remove();
+
+            const div = document.createElement('div');
+            div.id = 'drishtiNotification';
+            div.style.cssText = `
+                        position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+                        background: rgba(13,13,26,0.92); backdrop-filter: blur(20px);
+                        border-radius: 16px; padding: 16px 24px;
+                        border: 1px solid rgba(255,255,255,0.06);
+                        box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+                        display: flex; align-items: center; gap: 14px;
+                        color: #fff; font-size: 14px;
+                        animation: slideUp 0.4s ease;
+                        max-width: 400px;
+                    `;
+            div.innerHTML = `
+                        <i class="fas fa-check-circle" style="color:#2ecc71;font-size:24px;"></i>
+                        <span>${message}</span>
+                        <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#adb5bd;font-size:20px;cursor:pointer;">×</button>
+                    `;
+
+            // Add keyframe if not exists
+            if (!document.getElementById('drishtiStyle')) {
+                const style = document.createElement('style');
+                style.id = 'drishtiStyle';
+                style.textContent = `
+                            @keyframes slideUp {
+                                from { opacity: 0; transform: translateY(30px); }
+                                to { opacity: 1; transform: translateY(0); }
+                            }
+                        `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 4000);
+        }
+
+        // ============================================================
+        //  ENTER KEY SUPPORT
+        // ============================================================
+        document.getElementById('trackingForm').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                trackTrain(e);
+            }
+        });
+
+        // ============================================================
+        //  LOG
+        // ============================================================
+        console.log('👁️ RAIL Dishti – Train Tracking Page Loaded Successfully!');
+        console.log('📌 Enter any train number to track live status.');
+    </script>
+
+</body>
+</html>

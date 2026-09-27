@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seat Availability – RAIL</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================
+                   ROOT VARIABLES
+                ============================ */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.1);
+            --primary-green: #2ecc71;
+            --primary-blue: #3498db;
+            --primary-yellow: #f1c40f;
+            --primary-red: #e63946;
+            --primary-orange: #ff6b35;
+            --text-white: #fff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ============================
+                   RESET & BASE
+                ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: #fff;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 40%, #0d1f3c 100%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* ============================
+                   TOP BAR
+                ============================ */
+        .top-bar {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            color: #adb5bd;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .top-bar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .top-bar-left span:hover {
+            color: #fff;
+        }
+
+        .top-bar-left span i {
+            color: #2ecc71;
+            font-size: 13px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-bar-right a {
+            color: #adb5bd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .top-bar-right a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .top-bar-right .top-login {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-login:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .top-bar-right .top-register {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .top-bar-right .top-register:hover {
+            background: #3498db;
+            color: #fff;
+        }
+
+        /* ============================
+                   NAVBAR
+                ============================ */
+        .navbar {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            padding: 14px 0;
+            position: sticky;
+            top: 44px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .navbar .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .logo .logo-icon {
+            font-size: 32px;
+            animation: bounceTrain 3s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .navbar .logo .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar .logo .logo-text span {
+            color: #2ecc71;
+        }
+
+        .navbar .logo small {
+            font-size: 10px;
+            font-weight: 600;
+            color: #adb5bd;
+            display: block;
+            margin-top: -2px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #2ecc71;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-links a.active {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.12);
+        }
+
+        .nav-links .login-btn {
+            background: #2ecc71;
+            color: #0d0d1a !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+
+        .nav-links .login-btn::after {
+            display: none;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.30);
+            color: #0d0d1a !important;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   PAGE HEADER
+                ============================ */
+        .page-header {
+            text-align: center;
+            padding: 40px 20px 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header h1 span {
+            color: #2ecc71;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1rem;
+            margin-top: 4px;
+        }
+
+        /* ============================
+                   SEARCH SECTION
+                ============================ */
+        .search-section {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 32px 36px;
+            margin-bottom: 30px;
+        }
+
+        .search-section .search-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-section .search-tab {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-section .search-tab:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .search-section .search-tab.active {
+            background: #2ecc71;
+            color: #0d0d1a;
+        }
+
+        .search-section .search-tab i {
+            margin-right: 8px;
+        }
+
+        .search-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .search-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .search-form .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-form .form-group label i {
+            color: #2ecc71;
+            margin-right: 4px;
+        }
+
+        .search-form .form-group input,
+        .search-form .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-form .form-group input:focus,
+        .search-form .form-group select:focus {
+            border-color: #2ecc71;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.08);
+        }
+
+        .search-form .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .search-form .form-group select {
+            appearance: none;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-form .form-group select option {
+            color: #1a1a2e;
+            background: #fff;
+        }
+
+        .search-form .swap-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.4);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+
+        .search-form .swap-btn:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+            border-color: #2ecc71;
+            transform: rotate(180deg);
+        }
+
+        .search-form .search-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #0d0d1a;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .search-form .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.25);
+        }
+
+        .search-form .search-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #0d0d1a;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .search-form .search-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .search-form .search-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ============================
+                   AVAILABILITY RESULT
+                ============================ */
+        .availability-result {
+            display: none;
+            animation: fadeUp 0.6s ease;
+        }
+
+        .availability-result.show {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-summary {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .result-summary .train-info h3 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .result-summary .train-info .route {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        .result-summary .train-info .route i {
+            color: #2ecc71;
+            margin: 0 6px;
+        }
+
+        .result-summary .date-info {
+            text-align: right;
+        }
+
+        .result-summary .date-info .date {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .result-summary .date-info .day {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ===== CLASS AVAILABILITY TABLE ===== */
+        .class-table {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .class-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .class-table thead {
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .class-table thead th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .class-table tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .class-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .class-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .class-table tbody td {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .class-table tbody td .class-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .class-table tbody td .class-code {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            display: block;
+        }
+
+        .class-table tbody td .seat-count {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .class-table tbody td .seat-count.available {
+            color: #2ecc71;
+        }
+
+        .class-table tbody td .seat-count.limited {
+            color: #f1c40f;
+        }
+
+        .class-table tbody td .seat-count.full {
+            color: #e63946;
+        }
+
+        .class-table tbody td .seat-count.na {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .class-table tbody td .status-tag {
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .class-table tbody td .status-tag.available {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .class-table tbody td .status-tag.limited {
+            background: rgba(241, 196, 15, 0.15);
+            color: #f1c40f;
+        }
+
+        .class-table tbody td .status-tag.full {
+            background: rgba(230, 57, 70, 0.15);
+            color: #e63946;
+        }
+
+        .class-table tbody td .status-tag.na {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .class-table tbody td .book-btn {
+            padding: 6px 16px;
+            background: rgba(46, 204, 113, 0.12);
+            color: #2ecc71;
+            border: none;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .class-table tbody td .book-btn:hover {
+            background: #2ecc71;
+            color: #0d0d1a;
+            transform: translateY(-2px);
+        }
+
+        .class-table tbody td .book-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .class-table tbody td .book-btn:disabled:hover {
+            background: rgba(46, 204, 113, 0.12);
+            color: #2ecc71;
+            transform: none;
+        }
+
+        /* ============================
+                   QUICK FILTERS / LEGEND
+                ============================ */
+        .legend-section {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .legend-section .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .legend-section .legend-item .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-section .legend-item .dot.green {
+            background: #2ecc71;
+        }
+        .legend-section .legend-item .dot.yellow {
+            background: #f1c40f;
+        }
+        .legend-section .legend-item .dot.red {
+            background: #e63946;
+        }
+        .legend-section .legend-item .dot.gray {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================
+                   TOAST
+                ============================ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: rgba(13, 13, 26, 0.92);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            display: none;
+            align-items: center;
+            gap: 14px;
+            color: #fff;
+            font-size: 14px;
+            animation: slideUp 0.4s ease;
+            max-width: 420px;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast i {
+            font-size: 24px;
+        }
+
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: color 0.3s;
+        }
+
+        .toast .toast-close:hover {
+            color: #fff;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+                   FOOTER
+                ============================ */
+        footer {
+            background: rgba(13, 13, 26, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px 0 20px;
+            color: #adb5bd;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 20px;
+        }
+
+        footer .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        footer .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        footer .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer .footer-links a:hover {
+            color: #2ecc71;
+        }
+
+        /* ============================
+                   RESPONSIVE
+                ============================ */
+        @media (max-width: 1024px) {
+            .search-form .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 16px 0;
+                gap: 4px;
+                background: rgba(13, 13, 26, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 12px;
+                margin-top: 12px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .container {
+                flex-wrap: wrap;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .nav-links a::after {
+                display: none;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .search-section {
+                padding: 24px 20px;
+            }
+
+            .search-form .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form .swap-btn {
+                width: 100%;
+                border-radius: 14px;
+                height: 48px;
+            }
+
+            .search-form .search-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .result-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .result-summary .date-info {
+                text-align: left;
+            }
+
+            .class-table {
+                overflow-x: auto;
+            }
+
+            .class-table table {
+                min-width: 500px;
+            }
+
+            .toast {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+
+            .legend-section {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .search-section {
+                padding: 20px 16px;
+            }
+
+            .search-form .form-group input,
+            .search-form .form-group select {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone"></i> 139</span>
+                <span><i class="fas fa-envelope"></i> care@rail.co.in</span>
+                <span><i class="fas fa-clock"></i> 24x7 Support</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="language"><i class="fas fa-globe"></i> English ▼</a>
+                <a href="login.html" class="top-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.html" class="top-register"><i class="fas fa-user-plus"></i> Register</a>
+                <a href="forgot-password.html" style="font-size:11px; color:#6c757d;"><i class="fas fa-key"></i> Forgot?</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🚂</span>
+                <div>
+                    <span class="logo-text">RAIL</span>
+                    <small>Indian Railways</small>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                <li><a href="search.html"><i class="fas fa-search"></i> SEARCH</a></li>
+                <li><a href="seat-availability.html" class="active"><i class="fas fa-chair"></i> SEAT AVAILABILITY</a></li>
+                <li><a href="service.html"><i class="fas fa-concierge-bell"></i> SERVICES</a></li>
+                <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> LOG IN</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== CONTENT ==================== -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>💺 <span>Seat</span> Availability</h1>
+            <p>Check real-time seat availability for any train</p>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-tabs">
+                <button class="search-tab active" onclick="switchTab('train', this)">
+                    <i class="fas fa-train"></i> By Train
+                </button>
+                <button class="search-tab" onclick="switchTab('route', this)">
+                    <i class="fas fa-route"></i> By Route
+                </button>
+            </div>
+
+            <form class="search-form" id="availabilityForm" onsubmit="checkAvailability(event)">
+                <!-- By Train -->
+                <div id="trainSearch">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-barcode"></i> Train Number</label>
+                            <input type="text" id="trainNumber" placeholder="e.g. 12345" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Journey Date</label>
+                            <input type="date" id="journeyDate" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-chair"></i> Class</label>
+                            <select id="classSelect">
+                                <option value="all">All Classes</option>
+                                <option value="1A">1A - AC First</option>
+                                <option value="2A">2A - AC 2 Tier</option>
+                                <option value="3A">3A - AC 3 Tier</option>
+                                <option value="SL">SL - Sleeper</option>
+                                <option value="2S">2S - Second Seating</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="search-btn" id="searchBtn">
+                                <span class="btn-text"><i class="fas fa-search"></i> Check</span>
+                                <span class="spinner"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- By Route -->
+                <div id="routeSearch" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> From</label>
+                            <input type="text" id="fromStation" placeholder="Station name" />
+                        </div>
+                        <div class="form-group" style="max-width:60px;">
+                            <button type="button" class="swap-btn" onclick="swapStations()">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> To</label>
+                            <input type="text" id="toStation" placeholder="Station name" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Journey Date</label>
+                            <input type="date" id="routeDate" />
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-chair"></i> Class</label>
+                            <select id="routeClass">
+                                <option value="all">All Classes</option>
+                                <option value="1A">1A - AC First</option>
+                                <option value="2A">2A - AC 2 Tier</option>
+                                <option value="3A">3A - AC 3 Tier</option>
+                                <option value="SL">SL - Sleeper</option>
+                                <option value="2S">2S - Second Seating</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="search-btn" id="routeSearchBtn">
+                                <span class="btn-text"><i class="fas fa-search"></i> Check</span>
+                                <span class="spinner"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Availability Result -->
+        <div class="availability-result" id="availabilityResult">
+            <div class="result-summary">
+                <div class="train-info">
+                    <h3 id="resultTrain">12345 - Rajdhani Express</h3>
+                    <div class="route" id="resultRoute">
+                        <i class="fas fa-map-marker-alt"></i> Delhi <i class="fas fa-arrow-right"></i> Mumbai
+                    </div>
+                </div>
+                <div class="date-info">
+                    <div class="date" id="resultDate">25 Aug 2026</div>
+                    <div class="day" id="resultDay">Wednesday</div>
+                </div>
+            </div>
+
+            <!-- Class Table -->
+            <div class="class-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Code</th>
+                            <th>Total Seats</th>
+                            <th>Available</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classTableBody">
+                        <!-- Rendered by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend-section">
+                <div class="legend-item">
+                    <span class="dot green"></span> Available
+                </div>
+                <div class="legend-item">
+                    <span class="dot yellow"></span> Limited (< 10)
+                </div>
+                <div class="legend-item">
+                    <span class="dot red"></span> Full / Waitlist
+                </div>
+                <div class="legend-item">
+                    <span class="dot gray"></span> Not Available
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST ==================== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color:#2ecc71;"></i>
+        <span id="toastMessage">Action completed!</span>
+        <button class="toast-close" onclick="closeToast()">×</button>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 RAIL. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ============================================================
+        //  MOBILE MENU TOGGLE
+        // ============================================================
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const navLinks = document.getElementById('navLinks');
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============================================================
+        //  TAB SWITCH
+        // ============================================================
+        function switchTab(tab, element) {
+            document.querySelectorAll('.search-tab').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            document.getElementById('trainSearch').style.display = tab === 'train' ? 'block' : 'none';
+            document.getElementById('routeSearch').style.display = tab === 'route' ? 'block' : 'none';
+        }
+
+        // ============================================================
+        //  SWAP STATIONS
+        // ============================================================
+        function swapStations() {
+            const from = document.getElementById('fromStation');
+            const to = document.getElementById('toStation');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+
+            const btn = document.querySelector('.swap-btn');
+            btn.style.transform = 'rotate(360deg)';
+            setTimeout(() => btn.style.transform = 'rotate(0deg)', 400);
+        }
+
+        // ============================================================
+        //  SET DATES
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const formatDate = (d) => d.toISOString().split('T')[0];
+
+            document.getElementById('journeyDate').value = formatDate(tomorrow);
+            document.getElementById('routeDate').value = formatDate(tomorrow);
+            document.getElementById('journeyDate').setAttribute('min', formatDate(today));
+            document.getElementById('routeDate').setAttribute('min', formatDate(today));
+        });
+
+        // ============================================================
+        //  CLASS DATA
+        // ============================================================
+        const classData = [
+            { name: 'AC First Class', code: '1A', total: 48 },
+            { name: 'AC 2 Tier', code: '2A', total: 72 },
+            { name: 'AC 3 Tier', code: '3A', total: 144 },
+            { name: 'Sleeper Class', code: 'SL', total: 240 },
+            { name: 'Second Seating', code: '2S', total: 320 },
+        ];
+
+        // ============================================================
+        //  TRAIN DATA (for demo)
+        // ============================================================
+        const trainData = {
+            '12345': { name: 'Rajdhani Express', from: 'Delhi', to: 'Mumbai' },
+            '12951': { name: 'Mumbai Rajdhani', from: 'Mumbai', to: 'Delhi' },
+            '12259': { name: 'Sealdah Duronto', from: 'Sealdah', to: 'Delhi' },
+            '12001': { name: 'Bhopal Shatabdi', from: 'Bhopal', to: 'Delhi' },
+            '12905': { name: 'Howrah Rajdhani', from: 'Howrah', to: 'New Delhi' },
+            '12953': { name: 'August Kranti', from: 'Mumbai', to: 'Delhi' },
+            '13005': { name: 'Howrah Amritsar Mail', from: 'Howrah', to: 'Amritsar' },
+        };
+
+        // ============================================================
+        //  CHECK AVAILABILITY
+        // ============================================================
+        function checkAvailability(event) {
+            event.preventDefault();
+
+            let trainNumber = document.getElementById('trainNumber').value.trim();
+            let date = document.getElementById('journeyDate').value;
+
+            // Check if route tab is active
+            const activeTab = document.querySelector('.search-tab.active');
+            if (activeTab && activeTab.textContent.includes('Route')) {
+                const from = document.getElementById('fromStation').value.trim();
+                const to = document.getElementById('toStation').value.trim();
+                date = document.getElementById('routeDate').value;
+
+                if (!from || !to) {
+                    showToast('❌ Please enter both From and To stations.', 'error');
+                    return;
+                }
+
+                // Find train for demo
+                const found = Object.entries(trainData).find(([num, data]) =>
+                    data.from.toLowerCase().includes(from.toLowerCase()) &&
+                    data.to.toLowerCase().includes(to.toLowerCase())
+                );
+
+                if (found) {
+                    trainNumber = found[0];
+                } else {
+                    // Random train for demo
+                    const keys = Object.keys(trainData);
+                    trainNumber = keys[Math.floor(Math.random() * keys.length)];
+                }
+            }
+
+            if (!trainNumber) {
+                showToast('❌ Please enter a train number or route.', 'error');
+                return;
+            }
+
+            if (!date) {
+                showToast('❌ Please select a journey date.', 'error');
+                return;
+            }
+
+            // Show loading
+            const btn = document.getElementById('searchBtn');
+            const btn2 = document.getElementById('routeSearchBtn');
+            const activeBtn = btn.style.display !== 'none' ? btn : btn2;
+            activeBtn.classList.add('loading');
+            activeBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                activeBtn.classList.remove('loading');
+                activeBtn.disabled = false;
+
+                // Get train info
+                const trainInfo = trainData[trainNumber] || { name: 'Express Train', from: 'Station A', to: 'Station B' };
+
+                // Update result header
+                document.getElementById('resultTrain').textContent = `${trainNumber} - ${trainInfo.name}`;
+                document.getElementById('resultRoute').innerHTML =
+                    `<i class="fas fa-map-marker-alt"></i> ${trainInfo.from} <i class="fas fa-arrow-right"></i> ${trainInfo.to}`;
+
+                const dateObj = new Date(date);
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                document.getElementById('resultDate').textContent = dateObj.toLocaleDateString('en-IN', options);
+                document.getElementById('resultDay').textContent = dateObj.toLocaleDateString('en-IN', { weekday: 'long' });
+
+                // Generate random availability
+                const tbody = document.getElementById('classTableBody');
+                tbody.innerHTML = '';
+
+                // Filter by class if selected
+                const classFilter = document.getElementById('classSelect').value;
+                const routeClassFilter = document.getElementById('routeClass').value;
+                const filter = classFilter !== 'all' ? classFilter : (routeClassFilter !== 'all' ? routeClassFilter : 'all');
+
+                let classesToShow = classData;
+                if (filter !== 'all') {
+                    classesToShow = classData.filter(c => c.code === filter);
+                }
+
+                classesToShow.forEach(cls => {
+                    const available = Math.floor(Math.random() * (cls.total + 1));
+                    let status, statusClass, seatClass;
+
+                    if (available === 0) {
+                        status = 'Full / Waitlist';
+                        statusClass = 'full';
+                        seatClass = 'full';
+                    } else if (available < 10) {
+                        status = 'Limited';
+                        statusClass = 'limited';
+                        seatClass = 'limited';
+                    } else {
+                        status = 'Available';
+                        statusClass = 'available';
+                        seatClass = 'available';
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                                <td>
+                                    <span class="class-name">${cls.name}</span>
+                                    <span class="class-code">${cls.code}</span>
+                                </td>
+                                <td>${cls.code}</td>
+                                <td>${cls.total}</td>
+                                <td><span class="seat-count ${seatClass}">${available}</span></td>
+                                <td><span class="status-tag ${statusClass}">${status}</span></td>
+                                <td>
+                                    <button class="book-btn" ${available === 0 ? 'disabled' : ''} onclick="bookSeat('${cls.code}', '${trainNumber}')">
+                                        ${available === 0 ? 'Waitlist' : 'Book'}
+                                    </button>
+                                </td>
+                            `;
+                    tbody.appendChild(tr);
+                });
+
+                // Show result
+                document.getElementById('availabilityResult').classList.add('show');
+                document.getElementById('availabilityResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                showToast(`✅ Seat availability for ${trainNumber} - ${trainInfo.name} loaded!`, 'success');
+
+            }, 1200);
+        }
+
+        // ============================================================
+        //  BOOK SEAT
+        // ============================================================
+        function bookSeat(classCode, trainNumber) {
+            showToast(`🎫 Booking ${classCode} class on ${trainNumber}... Redirecting to booking page.`, 'info');
+            setTimeout(() => {
+                window.location.href = 'passenger.html';
+            }, 1500);
+        }
+
+        // ============================================================
+        //  TOAST NOTIFICATION
+        // ============================================================
+        let toastTimeout;
+
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const icon = toast.querySelector('i');
+
+            toastMessage.textContent = message;
+
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = '#2ecc71';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+                icon.style.color = '#e63946';
+            } else {
+                icon.className = 'fas fa-info-circle';
+                icon.style.color = '#3498db';
+            }
+
+            toast.classList.add('show');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function closeToast() {
+            document.getElementById('toast').classList.remove('show');
+            clearTimeout(toastTimeout);
+        }
+
+        // ============================================================
+        //  LOG
+        // ============================================================
+        console.log('💺 RAIL – Seat Availability Page Loaded Successfully!');
+        console.log('📌 Check availability by train number or route.');
+    </script>
+
+</body>
+</html>

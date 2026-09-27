@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login – RAIL</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* ============================
+               RESET & BASE
+            ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ============================
+               MAIN CARD
+            ============================ */
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+            padding: 40px 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* subtle top accent */
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #e63946, #f4a261, #e63946);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 200% 0%;
+            }
+        }
+
+        /* ============================
+               LOGO / HEADER
+            ============================ */
+        .login-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .login-header .logo-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #1a1a2e;
+            margin-bottom: 2px;
+        }
+
+        .login-header h1 span {
+            color: #e63946;
+        }
+
+        .login-header .sub {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6c757d;
+            letter-spacing: 0.3px;
+        }
+
+        .login-header .sub i {
+            color: #e63946;
+            margin-right: 4px;
+        }
+
+        /* ============================
+               TRAIN RESERVATION + LOYALTY
+            ============================ */
+        .reservation-badge {
+            background: #f8f9fa;
+            border-radius: 60px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 28px;
+            border: 1px solid #e9ecef;
+            flex-wrap: wrap;
+        }
+
+        .reservation-badge .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .reservation-badge .badge-item i {
+            color: #e63946;
+            font-size: 16px;
+        }
+
+        .reservation-badge .badge-divider {
+            width: 1px;
+            height: 24px;
+            background: #dee2e6;
+        }
+
+        .reservation-badge .loyalty {
+            background: linear-gradient(135deg, #ffd700, #f4a261);
+            color: #1a1a2e;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================
+               FORM
+            ============================ */
+        .login-form {
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 6px;
+        }
+
+        .form-group label i {
+            color: #e63946;
+            margin-right: 6px;
+            width: 18px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a2e;
+            background: #fafbfc;
+            transition: all 0.25s ease;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #e63946;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.08);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
+        }
+
+        .input-wrapper .toggle-pass {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+            cursor: pointer;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .input-wrapper .toggle-pass:hover {
+            color: #e63946;
+        }
+
+        /* ============================
+               MONTHLY SEASON TICKET
+            ============================ */
+        .season-ticket {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 14px;
+            margin: 6px 0 20px 0;
+            border: 1px dashed #dee2e6;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .season-ticket:hover {
+            background: #f1f3f5;
+            border-color: #e63946;
+        }
+
+        .season-ticket .st-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .season-ticket .st-left i {
+            color: #e63946;
+            font-size: 20px;
+        }
+
+        .season-ticket .st-left span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .season-ticket .st-left small {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 400;
+            display: block;
+        }
+
+        .season-ticket .st-badge {
+            background: #e63946;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================
+               BUTTONS
+            ============================ */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login:hover {
+            background: #c62836;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(230, 57, 70, 0.30);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        /* ============================
+               SIGNUP + FORGOT
+            ============================ */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .form-actions .signup-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .form-actions .signup-link i {
+            color: #e63946;
+            font-size: 14px;
+        }
+
+        .form-actions .signup-link:hover {
+            color: #e63946;
+        }
+
+        .form-actions .forgot-link {
+            font-size: 13px;
+            font-weight: 500;
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .form-actions .forgot-link:hover {
+            color: #e63946;
+        }
+
+        /* ============================
+               AGENT LOGIN + FIRST AGENTS
+            ============================ */
+        .agent-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .agent-section .agent-login {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a2e;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .agent-section .agent-login i {
+            color: #e63946;
+            font-size: 14px;
+        }
+
+        .agent-section .agent-login:hover {
+            color: #e63946;
+        }
+
+        .agent-section .first-agents {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6c757d;
+            letter-spacing: 0.3px;
+            background: #f1f3f5;
+            padding: 4px 14px;
+            border-radius: 40px;
+        }
+
+        .agent-section .first-agents i {
+            color: #ffd700;
+            margin-right: 4px;
+        }
+
+        /* ============================
+               RESPONSIVE
+            ============================ */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 28px 20px 24px;
+                border-radius: 20px;
+            }
+
+            .login-header h1 {
+                font-size: 24px;
+            }
+
+            .reservation-badge {
+                padding: 8px 12px;
+                gap: 10px;
+            }
+
+            .reservation-badge .badge-item {
+                font-size: 12px;
+            }
+
+            .reservation-badge .badge-divider {
+                display: none;
+            }
+
+            .season-ticket {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .agent-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
+        /* ============================
+               TOAST / MESSAGE (demo)
+            ============================ */
+        .toast-message {
+            display: none;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+            text-align: center;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .toast-message.show {
+            display: block;
+        }
+
+        .toast-message i {
+            margin-right: 8px;
+        }
+
+        .toast-message.success i {
+            color: #2ecc71;
+        }
+
+        .toast-message.error i {
+            color: #e63946;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================
+               LOADING SPINNER (on button)
+            ============================ */
+        .btn-login .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn-login.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-login.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- ====== HEADER ====== -->
+        <div class="login-header">
+            <span class="logo-icon">🚂</span>
+            <h1>Indian <span>Railway</span></h1>
+            <div class="sub"><i class="fas fa-chevron-circle-right"></i> Book. Travel. Explore.</div>
+        </div>
+
+        <!-- ====== TRAIN RESERVATION + LOYALTY ====== -->
+        <div class="reservation-badge">
+            <div class="badge-item">
+                <i class="fas fa-ticket-alt"></i> Train Reservation
+            </div>
+            <div class="badge-divider"></div>
+            <div class="badge-item loyalty">
+                <i class="fas fa-crown"></i> Loyalty Program
+            </div>
+        </div>
+
+        <!-- ====== LOGIN FORM ====== -->
+        <form class="login-form" id="loginForm" novalidate>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="username" placeholder="Enter your username" required
+                        autocomplete="username" />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password" required
+                        autocomplete="current-password" />
+                    <i class="fas fa-eye toggle-pass" id="togglePass" onclick="togglePasswordVisibility()"></i>
+                </div>
+            </div>
+
+            <!-- Monthly Season Ticket -->
+            <div class="season-ticket" onclick="alert('🎫 Monthly Season Ticket – Coming Soon!')">
+                <div class="st-left">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <span>Monthly Season Ticket</span>
+                        <small>Save up to 30% on daily travel</small>
+                    </div>
+                </div>
+                <span class="st-badge">NEW</span>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-login" id="loginBtn">
+                <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Login</span>
+                <span class="spinner"></span>
+            </button>
+
+            <!-- Signup + Forgot Password -->
+            <div class="form-actions">
+                <a href="register.html" class="signup-link">
+                    <i class="fas fa-user-plus"></i> Signup
+                </a>
+                <a href="forgot-password.html" class="forgot-link">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <!-- Toast Message (demo feedback) -->
+            <div class="toast-message" id="toastMessage">
+                <i class="fas fa-check-circle"></i> <span id="toastText">Login successful!</span>
+            </div>
+
+        </form>
+
+        <!-- ====== AGENT LOGIN + FIRST AGENTS ====== -->
+        <div class="agent-section">
+            <a href="#" class="agent-login" onclick="alert('🔐 Agent Login – Redirecting to agent portal...')">
+                <i class="fas fa-user-tie"></i> Agent Login
+            </a>
+            <span class="first-agents"><i class="fas fa-star"></i> First Agents</span>
+        </div>
+
+    </div>
+
+    <!-- ============================
+    JAVASCRIPT
+    ============================ -->
+    <script>
+        /**
+         * Toggle password visibility
+         */
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePass');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        /**
+         * Show toast message
+         */
+        function showToast(message, type) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+
+            toast.className = 'toast-message show ' + type;
+            toastText.textContent = message;
+
+            // Auto hide after 4 seconds
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        /**
+         * Handle form submission
+         */
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+
+            // --- Basic validation ---
+            if (!username) {
+                showToast('Please enter your username.', 'error');
+                document.getElementById('username').focus();
+                return;
+            }
+
+            if (!password) {
+                showToast('Please enter your password.', 'error');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            if (password.length < 4) {
+                showToast('Password must be at least 4 characters.', 'error');
+                document.getElementById('password').focus();
+                return;
+            }
+
+            // --- Simulate login loading ---
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                loginBtn.classList.remove('loading');
+                loginBtn.disabled = false;
+
+                // Demo: accept any non-empty username/password
+                // In real app, you'd validate against a backend
+                if (username && password.length >= 4) {
+                    showToast('✅ Login successful! Welcome, ' + username + '.', 'success');
+
+                    // Redirect to home after 1.5s
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1500);
+                } else {
+                    showToast('❌ Invalid credentials. Please try again.', 'error');
+                }
+            }, 1400);
+        });
+
+        /**
+         * Enter key support – form already handles it via submit event
+         */
+
+        /**
+         * Small enhancement: clear toast on input focus
+         */
+        document.querySelectorAll('#loginForm input').forEach(input => {
+            input.addEventListener('focus', function () {
+                const toast = document.getElementById('toastMessage');
+                toast.classList.remove('show');
+            });
+        });
+
+        /**
+         * Demo: show a welcome toast if user visits directly from index
+         */
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if redirected from signup
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('registered') === 'true') {
+                showToast('🎉 Account created! Please login.', 'success');
+            }
+        });
+
+        console.log('🚂 RAIL Login page loaded successfully.');
+    </script>
+
+</body>
+
+</html>
